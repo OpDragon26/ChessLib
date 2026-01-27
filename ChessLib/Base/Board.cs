@@ -2,5 +2,6 @@
 
 public class Board
 {
-    
+    public Bitboard Bitboards;
+    public PiecewiseBoard PiecewiseBoard;
 }
