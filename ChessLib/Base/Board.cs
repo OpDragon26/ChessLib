@@ -38,13 +38,14 @@ public class Board
         switch (move.Flag)
         {
             case Flag.DoublePawn:
-                EnPassantSquare = move.Target - 8 * Turn.GetOffset();
+                EnPassantSquare = move.Target + 8 * Turn.GetOffset();
                 break;
             
             case Flag.EnPassant:
-                byte pawn = PiecewiseBoard[EnPassantSquare];
-                PiecewiseBoard[EnPassantSquare] = Empty;
-                Bitboards[pawn].DisableBit(EnPassantSquare);
+                int capturedSquare = move.Target - 8 * Turn.GetOffset();
+                byte pawn = PiecewiseBoard[capturedSquare];
+                PiecewiseBoard[capturedSquare] = Empty;
+                Bitboards[pawn].DisableBit(capturedSquare);
                 break;
             
             case Flag.ShortCastle:
