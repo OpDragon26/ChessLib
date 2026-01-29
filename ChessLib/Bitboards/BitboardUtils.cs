@@ -21,4 +21,14 @@ public static class BitboardUtils
     {
         return bitboard.SharesBits(index.AsBitboard());
     }
+
+    public static void EnableBit(this ref ulong bitboard, int index)
+    {
+        bitboard |= index.AsBitboard();
+    }
+
+    public static void DisableBit(this ref ulong bitboard, int index)
+    {
+        bitboard &= ~index.AsBitboard();
+    }
 }
