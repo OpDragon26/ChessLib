@@ -16,4 +16,14 @@ public static class PieceUtils
     {
         return piece & 1;
     }
+
+    public static byte AsColor(this byte piece, int color)
+    {
+        return (byte)((piece << 1) | color);
+    }
+
+    public static byte SetColor(this byte piece, int color)
+    {
+        return (byte)((piece & 0b1110) | color);
+    }
 }

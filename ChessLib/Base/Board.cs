@@ -8,6 +8,7 @@ public class Board
     public int Turn;
     public Bitboard Bitboards;
     public PiecewiseBoard PiecewiseBoard;
+    public int EnPassantSquare;
 
     public void MakeMove(Move move)
     {
@@ -17,16 +18,12 @@ public class Board
         byte selectedPiece = move.IsPromotion ? move.Promotion : PiecewiseBoard[move.Source];
         byte targetPiece = PiecewiseBoard[move.Target];
         
-        // update the piecewise board
-        PiecewiseBoard[move.Target] = selectedPiece;
-        PiecewiseBoard[move.Source] = Empty;
-        
-        // update bitboards
-        Bitboards[selectedPiece].DisableBit(move.Source);
-        Bitboards[selectedPiece].EnableBit(move.Target);
+        MovePiece(move.Source, move.Target, selectedPiece);
         if (capture)
             Bitboards[targetPiece].DisableBit(move.Target);
         
+        // handle castling and double moves
+        EnPassantSquare = 0;
         if (move.Flag != Flag.None)
             HandleSpecialMove(move);
         
@@ -38,9 +35,25 @@ public class Board
         switch (move.Flag)
         {
             case Flag.DoublePawn:
-                
-                
+                EnPassantSquare = move.Target - 8 * Turn.GetOffset();
+                break;
+            
+            case Flag.ShortCastle:
+                MovePiece(move.Target + 1, move.Target - 1, Rook.AsColor(Turn));
+                break;
+            
+            case Flag.LongCastle:
+                MovePiece(move.Target - 2, move.Target + 1, Rook.AsColor(Turn));
                 break;
         }
+    }
+
+    private void MovePiece(int source, int target, byte piece)
+    {
+        PiecewiseBoard[source] = Empty;
+        PiecewiseBoard[target] = piece;
+        
+        Bitboards[piece].DisableBit(source);
+        Bitboards[piece].EnableBit(target);
     }
 }

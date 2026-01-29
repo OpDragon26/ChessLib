@@ -1,6 +1,9 @@
 ﻿namespace ChessLib.Base;
 
-public class BaseUtils
+public static class BaseUtils
 {
-    
+    public static int GetOffset(this int color)
+    {
+        return color * 2 - 1;
+    }
 }

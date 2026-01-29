@@ -17,11 +17,8 @@ public struct Bitboard
     public ulong AllWhite => this[0] | this[2] | this[4] | this[6] | this[8] | this[10];
     public ulong AllBlack => this[1] | this[3] | this[5] | this[7] | this[9] | this[11];
 
-    public void Set(byte piece, int index, bool value)
+    public ulong AllType(byte type)
     {
-        if (value)
-            this[piece] |= index.AsBitboard();
-        else
-            this[piece] &= ~index.AsBitboard();
+        return this[type.AsColor(0)] | this[type.AsColor(1)];
     }
 }
