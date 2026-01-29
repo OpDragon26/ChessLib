@@ -6,4 +6,9 @@ public static class BaseUtils
     {
         return color * 2 - 1;
     }
+
+    public static int Switch(this int turn)
+    {
+        return 1 - turn;
+    }
 }

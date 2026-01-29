@@ -12,14 +12,17 @@ public class Board
 
     public void MakeMove(Move move)
     {
-        ulong enemyPieces = Turn == 0 ? Bitboards.AllBlack : Bitboards.AllWhite;
-        bool capture = enemyPieces.Occupied(move.Target);
-
-        byte selectedPiece = move.IsPromotion ? move.Promotion : PiecewiseBoard[move.Source];
+        byte sourcePiece = PiecewiseBoard[move.Source];
+        byte selectedPiece = move.IsPromotion ? move.Promotion : sourcePiece;
         byte targetPiece = PiecewiseBoard[move.Target];
+
+        PiecewiseBoard[move.Source] = Empty;
+        PiecewiseBoard[move.Target] = selectedPiece;
         
-        MovePiece(move.Source, move.Target, selectedPiece);
-        if (capture)
+        Bitboards[sourcePiece].DisableBit(move.Source);
+        Bitboards[selectedPiece].EnableBit(move.Target);
+        
+        if (targetPiece != Empty)
             Bitboards[targetPiece].DisableBit(move.Target);
         
         // handle castling and double moves
@@ -27,7 +30,7 @@ public class Board
         if (move.Flag != Flag.None)
             HandleSpecialMove(move);
         
-        Turn = 1 - Turn;
+        Turn = Turn.Switch();
     }
 
     private void HandleSpecialMove(Move move)
@@ -36,6 +39,12 @@ public class Board
         {
             case Flag.DoublePawn:
                 EnPassantSquare = move.Target - 8 * Turn.GetOffset();
+                break;
+            
+            case Flag.EnPassant:
+                byte pawn = PiecewiseBoard[EnPassantSquare];
+                PiecewiseBoard[EnPassantSquare] = Empty;
+                Bitboards[pawn].DisableBit(EnPassantSquare);
                 break;
             
             case Flag.ShortCastle:

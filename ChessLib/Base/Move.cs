@@ -14,6 +14,7 @@ public enum Flag
 {
     None,
     DoublePawn,
+    EnPassant,
     ShortCastle,
     LongCastle,
 }
