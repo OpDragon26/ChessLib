@@ -1,6 +1,5 @@
 using ChessLib.API.Display.Formatting;
 using ChessLib.Base;
-using ChessLib.Utils;
 
 namespace ChessLib.API.Display;
 
@@ -35,14 +34,18 @@ public static class Display
 
     public static void PrintBoard(Board board, PieceFormat format, int perspective = 0, bool debug = false)
     {
+        Console.BackgroundColor = format.Light;
+        Console.ForegroundColor = format.Dark;
+        
         Console.Write(perspective == 0 ? "# A B C D E F G H" : "# H G F E D C B A");
         int rank = 0;
-
+        
         for (int square = 0; square < 64; square++)
         {
             int s = perspective == 0 ? square : 63 - square;
             if (s % 8 == 0)
             {
+                Console.BackgroundColor = format.Light;
                 int r = perspective == 0 ? rank + 1 : 8 - rank;
                 Console.Write($"\n{r} ");
             }
@@ -52,6 +55,7 @@ public static class Display
         }
 
         Console.BackgroundColor = ConsoleColor.Black;
+        Console.ForegroundColor = ConsoleColor.White;
         Console.WriteLine();
         Console.WriteLine(GetBoardDebugString(board));
     }
