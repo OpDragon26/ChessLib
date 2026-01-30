@@ -12,10 +12,10 @@ public static class Display
         
         for (int square = 0; square < 64; square++)
         {
-            int s = perspective == 0 ? square : 63 - square;
+            int s = perspective == 0 ? square.White() : square.Black();
             if (s % 8 == 0)
             {
-                int r = perspective == 0 ? rank + 1 : 8 - rank;
+                int r = perspective == 0 ? 8 - rank : rank + 1;
                 boardString += $"\n{r} ";
             }
             boardString += " " + format.FormatPiece(board[s]);
@@ -32,7 +32,7 @@ public static class Display
         return GetBoardString(board, DefaultFormatting.GetOSDefault(), perspective, debug);
     }
 
-    public static void PrintBoard(Board board, PieceFormat format, int perspective = 0, bool debug = false)
+    public static void PrintBoard(this Board board, PieceFormat format, int perspective = 0, bool debug = false)
     {
         Console.BackgroundColor = format.Light;
         Console.ForegroundColor = format.Dark;
@@ -42,11 +42,11 @@ public static class Display
         
         for (int square = 0; square < 64; square++)
         {
-            int s = perspective == 0 ? square : 63 - square;
+            int s = perspective == 0 ? square.White() : square.Black();
             if (s % 8 == 0)
             {
                 Console.BackgroundColor = format.Light;
-                int r = perspective == 0 ? rank + 1 : 8 - rank;
+                int r = perspective == 0 ? 8 - rank : rank + 1;
                 Console.Write($"\n{r} ");
             }
 
@@ -57,7 +57,13 @@ public static class Display
         Console.BackgroundColor = ConsoleColor.Black;
         Console.ForegroundColor = ConsoleColor.White;
         Console.WriteLine();
-        Console.WriteLine(GetBoardDebugString(board));
+        if (debug)
+            Console.WriteLine(GetBoardDebugString(board));
+    }
+
+    public static void PrintBoard(this Board board, int perspective = 0, bool debug = false)
+    {
+        PrintBoard(board, DefaultFormatting.GetOSDefault(), perspective, debug);
     }
 
     private static string GetBoardDebugString(Board board)
