@@ -15,6 +15,7 @@ public class Board
     private int _enPassantSquare;
     
     public byte this[int index] => _piecewiseBoard[index];
+
     public int Turn => _turn;
     public Bitboard Bitboards => _bitboards;
     public PiecewiseBoard PiecewiseBoard => _piecewiseBoard;
