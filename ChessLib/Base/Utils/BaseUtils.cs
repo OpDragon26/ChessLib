@@ -1,4 +1,4 @@
-﻿namespace ChessLib.Base;
+﻿namespace ChessLib.Base.Utils;
 
 public static class BaseUtils
 {

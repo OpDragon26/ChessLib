@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace ChessLib.Base;
+namespace ChessLib.Base.Utils;
 
 /*
  * Stores the pieces as they appear on the board

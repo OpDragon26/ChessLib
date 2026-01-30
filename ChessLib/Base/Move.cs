@@ -1,6 +1,6 @@
 namespace ChessLib.Base;
 
-public class Move(int source, int target, byte promotion = 0, Flag flag = Flag.None)
+public readonly struct Move(int source, int target, byte promotion = 0, Flag flag = Flag.None)
 {
     public readonly int Source = source;
     public readonly int Target = target;
@@ -10,7 +10,7 @@ public class Move(int source, int target, byte promotion = 0, Flag flag = Flag.N
     public bool IsPromotion => Promotion == 0;
 }
 
-public enum Flag
+public enum Flag : byte
 {
     None,
     DoublePawn,
