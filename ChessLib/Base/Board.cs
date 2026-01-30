@@ -13,6 +13,8 @@ public class Board
 
     public MutableValuePair<int> KingPositions;
     public int EnPassantSquare;
+    
+    public byte this[int index] => PiecewiseBoard[index];
 
     public Board(PiecewiseBoard board, int turn = 0, int enPassantSquare = 0)
     {

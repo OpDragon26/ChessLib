@@ -7,7 +7,7 @@
 
 public static class BitboardUtils
 {
-    public static ulong AsBitboard(this int index)
+    public static ulong ToBitboard(this int index)
     {
         return 1ul << index;
     }
@@ -19,16 +19,16 @@ public static class BitboardUtils
     
     public static bool Occupied(this ulong bitboard, int index)
     {
-        return bitboard.SharesBits(index.AsBitboard());
+        return bitboard.SharesBits(index.ToBitboard());
     }
 
     public static void EnableBit(this ref ulong bitboard, int index)
     {
-        bitboard |= index.AsBitboard();
+        bitboard |= index.ToBitboard();
     }
 
     public static void DisableBit(this ref ulong bitboard, int index)
     {
-        bitboard &= ~index.AsBitboard();
+        bitboard &= ~index.ToBitboard();
     }
 }
