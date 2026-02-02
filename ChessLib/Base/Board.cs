@@ -31,6 +31,20 @@ public class Board
         
         AutoInit();
     }
+
+    public Board Clone()
+    {
+        return new Board(this);
+    }
+    
+    private Board(Board board)
+    {
+        _turn = board.Turn;
+        _bitboards = board.Bitboards;
+        _piecewiseBoard = board.PiecewiseBoard;
+        _kingPositions = board.KingPositions;
+        _enPassantSquare = board.EnPassantSquare;
+    }
     
     public void MakeMove(Move move)
     {
