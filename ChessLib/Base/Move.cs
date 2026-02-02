@@ -1,3 +1,5 @@
+using ChessLib.API.Generic;
+
 namespace ChessLib.Base;
 
 public readonly struct Move(int source, int target, byte promotion = 0, Flag flag = Flag.None)
@@ -8,6 +10,9 @@ public readonly struct Move(int source, int target, byte promotion = 0, Flag fla
     public readonly Flag Flag = flag;
 
     public bool IsPromotion => Promotion == 0;
+
+    public Move(Coordinate source, Coordinate target, byte promotion = 0, Flag flag = Flag.None)
+        : this(source.AsIndex(), target.AsIndex(), promotion, flag) {}
 }
 
 public enum Flag : byte

@@ -2,6 +2,12 @@
 
 public static class Pieces
 {
+    /*
+     * Each piece is given a byte
+     * The least significant (last) bit represents the piece color, so white pieces are even and black pieces are odd
+     * 3 bits represent the piece
+     */
+    
     public const byte Empty = 0;
 
     public const byte WPawn = 2; // 0010

@@ -1,4 +1,5 @@
-﻿using ChessLib.Base.utils;
+﻿using ChessLib.API.Generic;
+using ChessLib.Base.utils;
 using ChessLib.Base.Utils;
 using ChessLib.Bitboards;
 using static ChessLib.Base.Pieces;
@@ -15,13 +16,14 @@ public class Board
     private int _enPassantSquare;
     
     public byte this[int index] => _piecewiseBoard[index];
+    public byte this[Coordinate c] => this[c.AsIndex()];
 
     public int Turn => _turn;
     public Bitboard Bitboards => _bitboards;
     public PiecewiseBoard PiecewiseBoard => _piecewiseBoard;
     public MutableValuePair<int> KingPositions => _kingPositions;
     public int EnPassantSquare => _enPassantSquare;
-
+    
     public Board(PiecewiseBoard board, int turn = 0, int enPassantSquare = 0)
     {
         _piecewiseBoard = board;
@@ -32,6 +34,9 @@ public class Board
         AutoInit();
     }
 
+    /// <summary>
+    /// Returns a board with the exact same position 
+    /// </summary>
     public Board Clone()
     {
         return new Board(this);
@@ -46,6 +51,9 @@ public class Board
         _enPassantSquare = board.EnPassantSquare;
     }
     
+    /// <summary>
+    /// Makes the given move on the board
+    /// </summary>
     public void MakeMove(Move move)
     {
         byte sourcePiece = _piecewiseBoard[move.Source];
@@ -106,6 +114,9 @@ public class Board
         _bitboards[piece].EnableBit(target);
     }
 
+    /// <summary>
+    /// Reverses the last made move based on an UnMove
+    /// </summary>
     public void UnmakeMove(UnMove unMove)
     {
         _turn = _turn.Switch();
@@ -152,12 +163,18 @@ public class Board
         }
     }
 
+    /// <summary>
+    /// Generates an UnMove, used to reverse the last made move
+    /// </summary>
     public UnMove GenerateUnMove(Move move)
     {
         byte capture = _piecewiseBoard[move.Target];
         return new UnMove(move.Source, move.Target, capture, _enPassantSquare, move.IsPromotion, move.Flag);
     }
 
+    /// <summary>
+    /// Automatically fills in bitboards and the king's position based on the given piecewise board
+    /// </summary>
     private void AutoInit()
     {
         for (int square = 0; square < 64; square++)

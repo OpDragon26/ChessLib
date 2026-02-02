@@ -1,6 +1,6 @@
 ﻿using ChessLib.Base;
 
-namespace ChessLib.API;
+namespace ChessLib.API.Generic;
 
 public struct Node(Board board, Move move)
 {

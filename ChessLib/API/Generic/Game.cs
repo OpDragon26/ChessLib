@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using ChessLib.Base;
 
-namespace ChessLib.API;
+namespace ChessLib.API.Generic;
 
 public class Game(Board starting) : IEnumerable<Node>
 {
@@ -11,7 +11,7 @@ public class Game(Board starting) : IEnumerable<Node>
     public Node this[int i] => _moves[i];
     public Node this[Index i] => _moves[i];
 
-    public void MakeMove(Move move)
+    public void AddMove(Move move)
     {
         _moves.Add(new Node(_current.Clone(), move));
         _current.MakeMove(move);
