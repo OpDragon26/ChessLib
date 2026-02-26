@@ -16,7 +16,13 @@ public class PieceFormat(char[] pieces, ConsoleColor light = ConsoleColor.DarkGr
     /// </summary>
     public char FormatPiece(byte piece)
     {
-        return pieces[piece];
+        return 
+            pieces[piece];
+    }
+
+    public byte ParsePiece(char piece)
+    {
+        return (byte)Array.IndexOf(pieces, (object)piece);
     }
 
     /// <summary>
