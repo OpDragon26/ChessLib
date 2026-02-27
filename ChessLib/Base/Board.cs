@@ -19,12 +19,13 @@ public class Board
     public byte this[int index] => PiecewiseBoard[index];
     public byte this[Coordinate c] => this[c.AsIndex()];
     
-    public Board(PiecewiseBoard board, int turn = 0, int enPassantSquare = 0)
+    public Board(PiecewiseBoard board, int turn = 0, int enPassantSquare = 0, CastlingRights castlingRights = new())
     {
         PiecewiseBoard = board;
         Bitboards = new();
         Turn = turn;
         EnPassantSquare = enPassantSquare;
+        CastlingRights = castlingRights;
         
         AutoInit();
     }

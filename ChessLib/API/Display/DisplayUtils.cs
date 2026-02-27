@@ -32,4 +32,14 @@ public static class DisplayUtils
     {
         return Ranks[rank];
     }
+
+    public static int GetFile(this char file)
+    {
+        return file - 'a';
+    }
+
+    public static int GetRank(this char rank)
+    {
+        return rank - '0';
+    }
 }

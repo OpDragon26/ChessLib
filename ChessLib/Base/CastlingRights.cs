@@ -1,8 +1,8 @@
 namespace ChessLib.Base;
 
-public struct CastlingRights()
+public struct CastlingRights(byte castling = 0b1111)
 {
-    private byte Castling = 0b1111;
+    private byte Castling = castling;
 
     public bool WhiteShort
     {
