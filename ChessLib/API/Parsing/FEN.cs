@@ -10,9 +10,23 @@ public static class FEN
     {
         string[] data = fen.Split(' ');
 
+        // piece placement data
         PiecewiseBoard pieceBoard = ParsePiecePlecementData(data[0]);
         
-        return new(pieceBoard);
+        // active color
+        int color = ParseActiveColor(data[1]);
+        
+        return new(pieceBoard, color);
+    }
+
+    private static int ParseActiveColor(string color)
+    {
+        color = color.ToLower();
+        if (color.Equals("w"))
+            return 0;
+        if (color.Equals("b"))
+            return 1;
+        throw new ThrowHelper.NotationParsingException($"Unable to parse FEN string: unknow color string: {color}");
     }
 
     private static PiecewiseBoard ParsePiecePlecementData(string data)
