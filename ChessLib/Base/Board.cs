@@ -1,5 +1,4 @@
 ﻿using ChessLib.API.Generic;
-using ChessLib.Base.utils;
 using ChessLib.Base.Utils;
 using ChessLib.Bitboards;
 using static ChessLib.Base.Pieces;
@@ -15,6 +14,7 @@ public class Board
     
     public MutableValuePair<int> KingPositions;
     public int EnPassantSquare;
+    public int HalfMoveClock;
     
     public byte this[int index] => PiecewiseBoard[index];
     public byte this[Coordinate c] => this[c.AsIndex()];
@@ -75,7 +75,8 @@ public class Board
         EnPassantSquare = 0;
         if (move.Flag != Flag.None)
             HandleSpecialMove(move);
-        
+
+        HalfMoveClock++;
         Turn = Turn.Switch();
     }
 

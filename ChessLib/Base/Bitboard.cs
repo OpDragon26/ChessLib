@@ -1,7 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using ChessLib.Base.Utils;
 
-namespace ChessLib.Base.utils;
+namespace ChessLib.Base;
 
 /*
  * Stores piece positions as bitboards

@@ -11,7 +11,7 @@ public static class FEN
         string[] data = fen.Split(' ');
 
         // piece placement data
-        PiecewiseBoard pieceBoard = ParsePiecePlecementData(data[0]);
+        PiecewiseBoard pieceBoard = ParsePiecePlacementData(data[0]);
         
         // active color
         int color = ParseActiveColor(data[1]);
@@ -22,7 +22,9 @@ public static class FEN
         // en passant square
         int enPassantSquare = ParseEnPassantSquare(data[3]);
         
-        return new(pieceBoard, color, enPassantSquare, castlingRights);
+        int halfMoveClock = int.Parse(data[4]);
+        
+        return new(pieceBoard, color, enPassantSquare, castlingRights) { HalfMoveClock = halfMoveClock };
     }
 
     private static int ParseEnPassantSquare(string square)
@@ -75,7 +77,7 @@ public static class FEN
         throw new ThrowHelper.NotationParsingException($"Unable to parse FEN string: invalid color string: {color}");
     }
 
-    private static PiecewiseBoard ParsePiecePlecementData(string data)
+    private static PiecewiseBoard ParsePiecePlacementData(string data)
     {
         PiecewiseBoard board = new();
         string[] lines = data.Split('/');
