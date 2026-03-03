@@ -85,6 +85,14 @@ public static class Display
                "\n| King positions:" +
                $"\n|\tWhite: {board.KingPositions.White}" +
                $"\n|\tBlack: {board.KingPositions.Black}" +
-               $"\n| En passant square: {board.EnPassantSquare.ToAlgebraic()}";
+               $"\n| En passant square: {EnPassantSquareFormat(board.EnPassantSquare)}";
+    }
+
+    private static string EnPassantSquareFormat(int square)
+    {
+        if (square == 0)
+            return "-";
+        else
+            return square.ToAlgebraic();
     }
 }
