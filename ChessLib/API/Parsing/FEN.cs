@@ -88,7 +88,7 @@ public static class FEN
             
             foreach (char c in lines[rank])
             {
-                (int file, int rank) square = (file, rank);
+                (int file, int rank) square = (file, 7-rank);
                 int index = square.AsIndex();
                 
                 if (int.TryParse(c.ToString(), out int files))

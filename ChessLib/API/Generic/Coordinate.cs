@@ -22,8 +22,8 @@ public readonly struct Coordinate(Perspective perspective, int file, int rank)
         return Perspective switch
         {
             Perspective.Objective => this,
-            Perspective.White => new Coordinate(File, -Rank),
-            Perspective.Black => new Coordinate(-File, Rank),
+            Perspective.White => new Coordinate(File, 7-Rank),
+            Perspective.Black => new Coordinate(7-File, Rank),
             _ => throw new Exception("no")
         };
     }
@@ -32,9 +32,9 @@ public readonly struct Coordinate(Perspective perspective, int file, int rank)
     {
         return Perspective switch
         {
-            Perspective.Objective => new Coordinate(File, -Rank),
+            Perspective.Objective => new Coordinate(File, 7-Rank),
             Perspective.White => this,
-            Perspective.Black => new Coordinate(-File, -Rank),
+            Perspective.Black => new Coordinate(7-File, 7-Rank),
             _ => throw new Exception("no")
         };
     }
@@ -43,8 +43,8 @@ public readonly struct Coordinate(Perspective perspective, int file, int rank)
     {
         return Perspective switch
         {
-            Perspective.Objective => new Coordinate(-File, Rank),
-            Perspective.White => new Coordinate(-File, -Rank),
+            Perspective.Objective => new Coordinate(7-File, Rank),
+            Perspective.White => new Coordinate(7-File, 7-Rank),
             Perspective.Black => this,
             _ => throw new Exception("no")
         };
@@ -65,6 +65,11 @@ public readonly struct Coordinate(Perspective perspective, int file, int rank)
     public int AsIndex()
     {
         return AsTuple().AsIndex();
+    }
+
+    public override string ToString()
+    {
+        return $"{Perspective}: ({File}, {Rank})";
     }
 }
 

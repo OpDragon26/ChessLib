@@ -7,7 +7,7 @@ public static class SquareUtils
     /// </summary>
     public static (int file, int rank) AsSquare(this int index)
     {
-        return (index / 8, index % 8);
+        return (index % 8, index / 8);
     }
 
     /// <summary>

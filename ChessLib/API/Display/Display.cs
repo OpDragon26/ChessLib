@@ -1,6 +1,7 @@
 using ChessLib.API.Display.Formatting;
 using ChessLib.API.Generic;
 using ChessLib.Base;
+using ChessLib.Utils;
 
 namespace ChessLib.API.Display;
 
@@ -12,7 +13,6 @@ public static class Display
     public static string GetBoardString(Board board, PieceFormat format, int perspective = 0, bool debug = false)
     {
         string boardString = perspective == 0 ? "# A B C D E F G H" : "# H G F E D C B A";
-        int rank = 0;
         
         for (int square = 0; square < 64; square++)
         {
@@ -21,9 +21,9 @@ public static class Display
             Coordinate objective = subjective.ToObjective();
             if (subjective.File == 0)
             {
-                boardString += $"\n{objective.Rank} ";
+                boardString += $"\n{objective.Rank + 1} ";
             }
-            boardString += " " + format.FormatPiece(board[objective]);
+            boardString += format.FormatPiece(board[objective]) + " ";
         }
 
         if (debug)

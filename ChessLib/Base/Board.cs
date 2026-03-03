@@ -1,4 +1,5 @@
 ﻿using ChessLib.API.Generic;
+using ChessLib.API.Parsing;
 using ChessLib.Base.Utils;
 using ChessLib.Bitboards;
 using static ChessLib.Base.Pieces;
@@ -18,6 +19,7 @@ public class Board
     
     public byte this[int index] => PiecewiseBoard[index];
     public byte this[Coordinate c] => this[c.AsIndex()];
+    public static Board StartingBoard => FEN.ParseFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
     
     public Board(PiecewiseBoard board, int turn = 0, int enPassantSquare = 0, CastlingRights castlingRights = new())
     {
