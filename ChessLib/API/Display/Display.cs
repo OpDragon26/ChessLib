@@ -45,10 +45,9 @@ public static class Display
     /// </summary>
     public static void PrintBoard(this Board board, PieceFormat format, int perspective = 0, bool debug = false)
     {
-        Console.BackgroundColor = format.Light;
-        Console.ForegroundColor = format.Dark;
-        
-        Console.Write(perspective == 0 ? "# A B C D E F G H" : "# H G F E D C B A");
+        Console.ForegroundColor = format.Piece;
+        Console.BackgroundColor = format.Dark;
+        Console.Write(perspective == 0 ? "# A B C D E F G H " : "# H G F E D C B A ");
         
         for (int square = 0; square < 64; square++)
         {
@@ -57,12 +56,12 @@ public static class Display
             Coordinate objective = subjective.ToObjective();
             if (subjective.File == 0)
             {
-                Console.BackgroundColor = format.Light;
+                Console.BackgroundColor = format.Dark;
                 Console.Write($"\n{objective.Rank} ");
             }
 
-            Console.BackgroundColor = format.GetColorAt(subjective);
-            Console.Write($" {format.FormatPiece(board[objective])}");
+            Console.BackgroundColor = format.GetColorAt(square);
+            Console.Write($"{format.FormatPiece(board[objective])} ");
         }
 
         Console.BackgroundColor = ConsoleColor.Black;

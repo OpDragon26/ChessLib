@@ -40,6 +40,6 @@ public static class DisplayUtils
 
     public static int GetRank(this char rank)
     {
-        return rank - '0';
+        return rank - '1';
     }
 }

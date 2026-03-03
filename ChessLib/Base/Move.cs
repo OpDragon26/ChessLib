@@ -9,7 +9,7 @@ public readonly struct Move(int source, int target, byte promotion = 0, Flag fla
     public readonly byte Promotion = promotion;
     public readonly Flag Flag = flag;
 
-    public bool IsPromotion => Promotion == 0;
+    public bool IsPromotion => Promotion != 0;
 
     public Move(Coordinate source, Coordinate target, byte promotion = 0, Flag flag = Flag.None)
         : this(source.AsIndex(), target.AsIndex(), promotion, flag) {}
