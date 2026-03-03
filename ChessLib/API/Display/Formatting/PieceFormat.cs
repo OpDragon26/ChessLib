@@ -6,7 +6,7 @@ namespace ChessLib.API.Display.Formatting;
 /// <summary>
 /// Specifies how to convert a board into a string
 /// </summary>
-public class PieceFormat(char[] pieces, ConsoleColor light = ConsoleColor.DarkBlue, ConsoleColor dark = ConsoleColor.Black, ConsoleColor piece = ConsoleColor.White)
+public class PieceFormat(char[] pieces, ConsoleColor light = ConsoleColor.DarkGray, ConsoleColor dark = ConsoleColor.Black, ConsoleColor piece = ConsoleColor.White)
 {
     public readonly ConsoleColor Light = light;
     public readonly ConsoleColor Dark = dark;
