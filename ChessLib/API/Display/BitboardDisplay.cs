@@ -6,10 +6,16 @@ namespace ChessLib.API.Display;
 
 public static class BitboardDisplay
 {
+    /// <summary>
+    /// Returns a string with the given formatting representing the bitboard
+    /// </summary>
     public static string GetBitboardString(this ulong bitboard, BitFormat format, int perspective = 0)
     {
-        Console.Write(perspective == 0 ? "# A B C D E F G H " : "# H G F E D C B A ");
         string bitboardString = "";
+        bitboardString += bitboard + "\n";
+        bitboardString += Convert.ToString((long)bitboard, 2).PadLeft(64, '0') + "\n";
+        
+        bitboardString += perspective == 0 ? "# A B C D E F G H " : "# H G F E D C B A ";
         
         for (int square = 0; square < 64; square++)
         {
@@ -29,16 +35,25 @@ public static class BitboardDisplay
         return bitboardString;
     }
 
+    /// <summary>
+    /// Returns a string with the default formatting representing the bitboard
+    /// </summary>
     public static string GetBitboardString(this ulong bitboard, int perspective = 0)
     {
         return GetBitboardString(bitboard, DefaultFormatting.Bitboard, perspective);
     }
 
+    /// <summary>
+    /// Prints the given bitboard to the console using the given formatting
+    /// </summary>
     public static void PrintBitboard(this ulong bitboard, BitFormat format, int perspective = 0)
     {
         Console.WriteLine(GetBitboardString(bitboard, format, perspective));
     }
 
+    /// <summary>
+    /// Prints the given bitboard to the console using the default formatting
+    /// </summary>
     public static void PrintBitboard(this ulong bitboard, int perspective = 0)
     {
         Console.WriteLine(GetBitboardString(bitboard, perspective));
