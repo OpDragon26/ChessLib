@@ -5,7 +5,7 @@ using ChessLib.Utils;
 
 namespace ChessLib.API.Display;
 
-public static class Display
+public static class BoardDisplay
 {
     /// <summary>
     /// Returns a string with the given formatting representing the board
