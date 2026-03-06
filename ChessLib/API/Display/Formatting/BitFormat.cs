@@ -1,4 +1,4 @@
-﻿using ChessLib.Bitboards;
+﻿using ChessLib.Bitboards.Utils;
 
 namespace ChessLib.API.Display.Formatting;
 

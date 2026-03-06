@@ -1,4 +1,4 @@
-﻿namespace ChessLib.Bitboards;
+﻿namespace ChessLib.Bitboards.Utils;
 
 /*
  * Bitboards store whether a square is occupied by a certain piece

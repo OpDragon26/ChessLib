@@ -1,7 +1,7 @@
 ﻿using ChessLib.API.Generic;
 using ChessLib.API.Parsing;
 using ChessLib.Base.Utils;
-using ChessLib.Bitboards;
+using ChessLib.Bitboards.Utils;
 using static ChessLib.Base.Pieces;
 
 namespace ChessLib.Base;

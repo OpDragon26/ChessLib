@@ -1,6 +1,6 @@
 using ChessLib.API.Display.Formatting;
 using ChessLib.API.Generic;
-using ChessLib.Bitboards;
+using ChessLib.Bitboards.Utils;
 
 namespace ChessLib.API.Display;
 
