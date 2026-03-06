@@ -30,5 +30,5 @@ public class MovePattern((int file, int rank)[] offsets, bool repeat)
         (1, -2),
         (-1,2),
         (-1, -2),
-    ], true);
+    ], false);
 }

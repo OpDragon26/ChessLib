@@ -12,7 +12,7 @@ public static class MaskUtils
     /// </summary>
     public static ulong GetFile(int file)
     {
-        return File << file * 8;
+        return File << (file);
     }
 
     /// <summary>
@@ -20,7 +20,7 @@ public static class MaskUtils
     /// </summary>
     public static ulong GetRank(int rank)
     {
-        return Rank << rank;
+        return Rank << (rank * 8);
     }
 
     /// <summary>
@@ -28,7 +28,7 @@ public static class MaskUtils
     /// </summary>
     public static ulong GetUD((int file, int rank) square)
     {
-        int push = (square.rank - square.file) * 8;
+        int push = (7 - square.rank - square.file) * 8;
         return push >= 0 ? UpDiagonal >> push : UpDiagonal << -push;
     }
 
@@ -37,7 +37,7 @@ public static class MaskUtils
     /// </summary>
     public static ulong GetDD((int file, int rank) square)
     {
-        int push = (square.rank + square.file - 7) * 8;
+        int push = (square.file - square.rank) * 8;
         return push >= 0 ? DownDiagonal >> push : DownDiagonal << -push;
     }
 }
