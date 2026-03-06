@@ -91,7 +91,7 @@ public class Board
                 break;
             
             case Flag.EnPassant:
-                int capturedSquare = move.Target - 8 * Turn.GetOffset();
+                int capturedSquare = move.Target + 8 * Turn.GetOffset();
                 byte pawn = PiecewiseBoard[capturedSquare];
                 PiecewiseBoard[capturedSquare] = Empty; 
                 Bitboards[pawn].DisableBit(capturedSquare);
@@ -150,7 +150,7 @@ public class Board
         switch (unMove.Flag)
         {
             case Flag.EnPassant:
-                int capturedSquare = unMove.Target - 8 * Turn.GetOffset();
+                int capturedSquare = unMove.Target + 8 * Turn.GetOffset();
                 byte pawn = Pawn.AsColor(Turn.Switch());
 
                 PiecewiseBoard[capturedSquare] = pawn;

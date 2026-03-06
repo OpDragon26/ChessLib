@@ -57,7 +57,7 @@ public static class BoardDisplay
             if (subjective.File == 0)
             {
                 Console.BackgroundColor = format.Dark;
-                Console.Write($"\n{objective.Rank} ");
+                Console.Write($"\n{objective.Rank + 1} ");
             }
 
             Console.BackgroundColor = format.GetColorAt(square);
