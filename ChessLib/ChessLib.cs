@@ -13,6 +13,7 @@ public static class ChessLib
         InitStage = InitStage.Ongoing;
         
         Masks.Init();
+        Combinations.Init();
 
         InitStage = InitStage.Complete;
     }

@@ -64,10 +64,10 @@ public static class Masks
         (int file, int rank) origin = square.AsSquare();
         ulong mask = 0;
         
+        int l = pattern.Repeat ? 8 : 2;
+        
         foreach ((int file, int rank) offset in pattern.Offsets)
         {
-            int l = pattern.Repeat ? 8 : 2;
-            
             for (int d = 1; d < l; d++)
             {
                 (int file, int rank) target = origin.OffsetBy(offset, d);

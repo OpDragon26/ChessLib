@@ -40,6 +40,14 @@ public static class BitboardUtils
     {
         return bitboard.SharesBits(index.ToBitboard());
     }
+    
+    /// <summary>
+    /// Returns whether the given index is turned to 1 on the bitboard
+    /// </summary>
+    public static bool Occupied(this ulong bitboard, (int file, int rank) square)
+    {
+        return bitboard.SharesBits(square.ToBitboard());
+    }
 
     /// <summary>
     /// Turns the given bit to 1 on the bitboard
