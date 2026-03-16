@@ -13,11 +13,24 @@ public static class Combinations
     public static readonly ulong[][] Queen = new ulong[64][];
     public static readonly ulong[][] King = new ulong[64][];
 
+    
+    /// <summary>
+    /// Requires Masks to be initialized first
+    /// </summary>
     public static void Init()
     {
         if (Initialized) 
             return;
         Initialized = true;
+        
+        for (int square = 0; square < 64; square++)
+        {
+            Rook[square] = GetCombinations(Masks.Rook[square]);
+            Bishop[square] = GetCombinations(Masks.Bishop[square]);
+            Knight[square] = GetCombinations(Masks.Knight[square]);
+            Queen[square] = GetCombinations(Masks.Queen[square]);
+            King[square] = GetCombinations(Masks.King[square]);
+        }
     }
 
     public static ulong[] GetCombinations(ulong mask)

@@ -18,6 +18,9 @@ public static class DefaultFormatting
         ConsoleColor.White, ConsoleColor.Gray, ConsoleColor.Black
         );
 
+    /// <summary>
+    /// Returns the default formatting for the current OS's terminal
+    /// </summary>
     public static PieceFormat GetOSDefault()
     {
         return IsLinux()
@@ -25,6 +28,9 @@ public static class DefaultFormatting
             : ASCII;
     }
 
+    /// <summary>
+    /// Returns the default light formatting for the current OS's terminal
+    /// </summary>
     public static PieceFormat GetOSLight()
     {
         return IsLinux()

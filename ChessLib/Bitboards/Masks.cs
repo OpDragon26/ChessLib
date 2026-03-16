@@ -12,6 +12,7 @@ public static class Masks
     public static readonly ulong[] Bishop = new ulong[64];
     public static readonly ulong[] Knight = new ulong[64];
     public static readonly ulong[] Queen = new ulong[64];
+    public static readonly ulong[] King = new ulong[64];
     
     public static void Init()
     {
@@ -25,7 +26,25 @@ public static class Masks
             Bishop[square] = GenBishopMask(square);
             Knight[square] = GenPieceMask(square, MovePattern.Knight);
             Queen[square] = Rook[square] | Bishop[square];
+            King[square] = GenKingMask(square);
         }
+    }
+
+    private static ulong GenKingMask(int square)
+    {
+        ulong mask = 0;
+        
+        (int file, int rank) origin = square.AsSquare();
+        for (int i = -1; i < 2; i++)
+        for (int j = -1; j < 2; j++)
+        {
+            (int file, int rank) target = origin.OffsetBy((i, j));
+            if (!target.OutOfBounds())
+                mask |= target.ToBitboard();
+        }
+        mask ^= origin.ToBitboard();
+        
+        return mask;
     }
 
     private static ulong GenRookMask(int square)

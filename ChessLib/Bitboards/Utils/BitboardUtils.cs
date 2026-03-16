@@ -1,4 +1,6 @@
-﻿namespace ChessLib.Bitboards.Utils;
+﻿using ChessLib.Utils;
+
+namespace ChessLib.Bitboards.Utils;
 
 /*
  * Bitboards store whether a square is occupied by a certain piece
@@ -13,6 +15,14 @@ public static class BitboardUtils
     public static ulong ToBitboard(this int index)
     {
         return 1ul << index;
+    }
+    
+    /// <summary>
+    /// Returns the given file-rank tuple represented as a bitboard
+    /// </summary>
+    public static ulong ToBitboard(this (int file, int rank) square)
+    {
+        return square.AsIndex().ToBitboard();
     }
 
     /// <summary>
