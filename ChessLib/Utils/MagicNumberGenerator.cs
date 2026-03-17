@@ -37,6 +37,23 @@ public static class MagicNumberGenerator
         return best;
     }
 
+    public static MagicNumber GenerateAsync(ulong[] combinations, int threads = 5, int shift = 48, bool log = false)
+    {
+        bool searching = true;
+        MagicNumber magic = new();
+        Mutex InitMutex = new();
+        
+        for (int t = 0; t < threads; t++)
+        {
+            new Thread(() =>
+            {
+                
+            }).Start();
+        }
+        
+        return magic;
+    }
+
     private static bool IsValid(this MagicNumber number, ulong[] combinations, ulong[] result, out ulong max)
     {
         max = 0;
