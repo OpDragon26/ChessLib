@@ -1,4 +1,5 @@
 using ChessLib.Bitboards;
+using ChessLib.Magic_Lookup;
 
 namespace ChessLib;
 
@@ -14,6 +15,7 @@ public static class ChessLib
         
         Masks.Init();
         Combinations.Init();
+        Moves.Init();
 
         InitStage = InitStage.Complete;
     }

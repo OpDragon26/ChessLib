@@ -27,6 +27,16 @@ public static class MagicNumberGenerator
         }
     }
 
+    public static MagicNumber Generate(ulong[] combinations, int iterations, int shift = 48, bool improve = false, bool log = false)
+    {
+        MagicNumber best = new();
+        
+        for (int i = 0; i < iterations; i++)
+            best = Generate(combinations, shift, improve, log);
+
+        return best;
+    }
+
     private static bool IsValid(this MagicNumber number, ulong[] combinations, ulong[] result, out ulong max)
     {
         max = 0;

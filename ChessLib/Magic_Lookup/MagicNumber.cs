@@ -1,4 +1,6 @@
-﻿namespace ChessLib.Magic_Lookup;
+﻿using ChessLib.Utils;
+
+namespace ChessLib.Magic_Lookup;
 
 public readonly struct MagicNumber(ulong number, int shift, int max)
 {
@@ -9,5 +11,15 @@ public readonly struct MagicNumber(ulong number, int shift, int max)
     public ulong Calculate(ulong combination)
     {
         return (combination * Number) >> Shift;
+    }
+
+    public override string ToString()
+    {
+        return $"({Number.ToHex()} >> {Shift} | {Max})";
+    }
+
+    public bool BetterThan(MagicNumber other)
+    {
+        return Shift > other.Shift || (Shift == other.Shift && Max < other.Max);
     }
 }
