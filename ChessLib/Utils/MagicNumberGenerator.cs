@@ -30,26 +30,63 @@ public static class MagicNumberGenerator
     public static MagicNumber Generate(ulong[] combinations, int iterations, int shift = 48, bool improve = false, bool log = false)
     {
         MagicNumber best = new();
+
+        if (log)
+            Console.WriteLine(
+                $"Generating magic numbers for {combinations.Length} combinations with a minimal shift of {shift}");
         
         for (int i = 0; i < iterations; i++)
-            best = Generate(combinations, shift, improve, log);
+        {
+            Console.WriteLine($"i {i + 1}/{iterations}");
+            MagicNumber candidate = Generate(combinations, shift, improve);
+
+            if (candidate.BetterThan(best))
+                best = candidate;
+        }
 
         return best;
     }
 
-    public static MagicNumber GenerateAsync(ulong[] combinations, int threads = 5, int shift = 48, bool log = false)
+    public static MagicNumber GenerateParallel(ulong[] combinations, int threads = 5, int shift = 48, bool log = false)
     {
-        bool searching = true;
+        bool finished = false;
         MagicNumber magic = new();
         Mutex InitMutex = new();
+        
+        if (log)
+            Console.WriteLine(
+                $"Generating magic numbers in parallel for {combinations.Length} combinations with a set shift of {shift}");
         
         for (int t = 0; t < threads; t++)
         {
             new Thread(() =>
             {
+                ulong[] results = new ulong[combinations.Length];
                 
+                while (true)
+                {
+                    InitMutex.WaitOne();
+                    if (finished)
+                    {
+                        InitMutex.ReleaseMutex();
+                        break;
+                    }
+                    MagicNumber candidate = new(GeneralUtils.Random(), shift, 0);
+                    InitMutex.ReleaseMutex();
+
+                    if (candidate.IsValid(combinations, results, out ulong max))
+                    {
+                        InitMutex.WaitOne();
+                        magic = new(candidate.Number, candidate.Shift, (int)max);
+                        finished = true;
+                        InitMutex.ReleaseMutex();
+                    }
+                }
             }).Start();
         }
+
+        while (!finished)
+            Thread.Sleep(100);
         
         return magic;
     }

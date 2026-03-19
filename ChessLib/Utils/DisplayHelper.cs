@@ -9,11 +9,11 @@ public static class DisplayHelper
 
     public static string ToHex(this ulong n)
     {
-        return "0b" + Convert.ToString((long)n, 16);
+        return "0x" + Convert.ToString((long)n, 16);
     }
 
     public static string ToArrayString<T>(this IEnumerable<T> list)
     {
-        return "[" + string.Join(" ", list) + "]";
+        return "[" + string.Join(", ", list) + "]";
     }
 }

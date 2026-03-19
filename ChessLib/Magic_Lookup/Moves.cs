@@ -26,7 +26,7 @@ public static class Moves
         MagicNumber[] RookMagics = new MagicNumber[64];
         for (int i = 0; i < 64; i++)
         {
-            RookMagics[i] = MagicNumberGenerator.Generate(Combinations.Rook[i]);
+            RookMagics[i] = MagicNumberGenerator.GenerateParallel(Combinations.Rook[i], threads: 8);
             Console.WriteLine($"Magic numbers done: {i + 1}/64");
         }
         
