@@ -31,6 +31,15 @@ public static class Moves
         }
         
         Console.WriteLine(RookMagics.ToArrayString());
+        
+        MagicNumber[] Bishop = new MagicNumber[64];
+        for (int i = 0; i < 64; i++)
+        {
+            Bishop[i] = MagicNumberGenerator.Generate(Combinations.Bishop[i], iterations: 100);
+            Console.WriteLine($"Magic numbers done: {i + 1}/64");
+        }
+        
+        Console.WriteLine(Bishop.ToArrayString());
     }
     
     private static ulong GenBitboardMoves(int square, ulong blockers, MovePattern pattern)
