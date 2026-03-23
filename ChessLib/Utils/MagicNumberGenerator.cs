@@ -12,7 +12,7 @@ public static class MagicNumberGenerator
             Console.WriteLine(
                 $"Generating magic numbers for {combinations.Length} combinations with a minimal shift of {shift}");
 
-        ulong[] results = new ulong[combinations.Length];
+        HashSet<ulong> results = new HashSet<ulong>(combinations.Length);
 
         while (true)
         {
@@ -22,6 +22,7 @@ public static class MagicNumberGenerator
                 return !improve 
                     ? new(number.Number, number.Shift, (int)max)
                     : number.Improve(combinations);
+            results.Clear();
             
             shift = minShift;
         }
@@ -37,7 +38,8 @@ public static class MagicNumberGenerator
         
         for (int i = 0; i < iterations; i++)
         {
-            Console.WriteLine($"i {i + 1}/{iterations}");
+            if (log)
+                Console.WriteLine($"i {i + 1}/{iterations}");
             MagicNumber candidate = Generate(combinations, shift, improve);
 
             if (candidate.BetterThan(best))
@@ -61,7 +63,7 @@ public static class MagicNumberGenerator
         {
             new Thread(() =>
             {
-                ulong[] results = new ulong[combinations.Length];
+                HashSet<ulong> results = new HashSet<ulong>(combinations.Length);
                 
                 while (true)
                 {
@@ -81,6 +83,8 @@ public static class MagicNumberGenerator
                         finished = true;
                         InitMutex.ReleaseMutex();
                     }
+                    
+                    results.Clear();
                 }
             }).Start();
         }
@@ -91,25 +95,30 @@ public static class MagicNumberGenerator
         return magic;
     }
 
-    private static bool IsValid(this MagicNumber number, ulong[] combinations, ulong[] result, out ulong max)
+    private static bool IsValid(this MagicNumber number, ulong[] combinations, HashSet<ulong> result, out ulong max)
     {
         max = 0;
 
         for (int i = 0; i < combinations.Length; i++)
         {
-            result[i] = number.Calculate(combinations[i]);
-            if (result[i] > max)
-                max = result[i];
+            ulong hash = number.Calculate(combinations[i]);
+            if (result.Contains(hash))
+                return false;
+            
+            result.Add(hash);
+            
+            if (hash > max)
+                max = hash;
         }
 
         max++;
-        return result.Length == new HashSet<ulong>(result).Count;
+        return true;
     }
 
     private static MagicNumber Improve(this MagicNumber number, ulong[] combinations)
     {
         MagicNumber improved = new(number.Number, number.Shift + 1, number.Max);
-        ulong[] result = new ulong[combinations.Length];
+        HashSet<ulong> result = new HashSet<ulong>(combinations.Length);
 
         if (improved.IsValid(combinations, result, out ulong max))
         {

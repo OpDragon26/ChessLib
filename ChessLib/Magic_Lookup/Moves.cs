@@ -22,20 +22,19 @@ public static class Moves
         if (Initialized)
             return;
         Initialized = true;
-
-        MagicNumber[] RookMagics = new MagicNumber[64];
-        for (int i = 0; i < 64; i++)
-        {
-            RookMagics[i] = MagicNumberGenerator.GenerateParallel(Combinations.Rook[i], threads: 8);
-            Console.WriteLine($"Magic numbers done: {i + 1}/64");
-        }
-        
-        Console.WriteLine(RookMagics.ToArrayString());
         
         MagicNumber[] Bishop = new MagicNumber[64];
+        int[] no = [27, 28, 35, 36];
         for (int i = 0; i < 64; i++)
         {
-            Bishop[i] = MagicNumberGenerator.Generate(Combinations.Bishop[i], iterations: 100);
+            if (no.Contains(i))
+            {
+                Console.WriteLine("e");
+                Bishop[i] = MagicNumberGenerator.GenerateParallel(Combinations.Bishop[i].Distinct().ToArray(), threads: 8, shift: 46);
+            }
+            Bishop[i] = MagicNumberGenerator.Generate(Combinations.Bishop[i], iterations: 1000);
+            
+            
             Console.WriteLine($"Magic numbers done: {i + 1}/64");
         }
         
