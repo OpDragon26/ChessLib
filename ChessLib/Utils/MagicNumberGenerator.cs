@@ -28,7 +28,7 @@ public static class MagicNumberGenerator
         }
     }
 
-    public static MagicNumber Generate(ulong[] combinations, int iterations, int shift = 48, bool improve = false, bool log = false)
+    public static MagicNumber Generate(ulong[] combinations, int iterations, int shift = 48, bool improve = true, bool log = false)
     {
         MagicNumber best = new();
 
@@ -42,7 +42,7 @@ public static class MagicNumberGenerator
                 Console.WriteLine($"i {i + 1}/{iterations}");
             MagicNumber candidate = Generate(combinations, shift, improve);
 
-            if (candidate.BetterThan(best))
+            if (candidate.Shift > best.Shift)
                 best = candidate;
         }
 

@@ -28,11 +28,9 @@ public static class Moves
         for (int i = 0; i < 64; i++)
         {
             if (no.Contains(i))
-            {
-                Console.WriteLine("e");
-                Bishop[i] = MagicNumberGenerator.GenerateParallel(Combinations.Bishop[i].Distinct().ToArray(), threads: 8, shift: 46);
-            }
-            Bishop[i] = MagicNumberGenerator.Generate(Combinations.Bishop[i], iterations: 1000);
+                Bishop[i] = MagicNumberGenerator.GenerateParallel(Combinations.Bishop[i].Distinct().ToArray(), threads: 8, shift: 48);
+            else
+                Bishop[i] = MagicNumberGenerator.Generate(Combinations.Bishop[i], iterations: 10000);
             
             
             Console.WriteLine($"Magic numbers done: {i + 1}/64");
