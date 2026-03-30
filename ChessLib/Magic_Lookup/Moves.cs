@@ -23,23 +23,27 @@ public static class Moves
             return;
         Initialized = true;
         
-        MagicNumber[] Bishop = new MagicNumber[64];
-        int[] no = [27, 28, 35, 36];
         for (int i = 0; i < 64; i++)
         {
-            if (no.Contains(i))
-                Bishop[i] = MagicNumberGenerator.GenerateParallel(Combinations.Bishop[i].Distinct().ToArray(), threads: 8, shift: 48);
-            else
-                Bishop[i] = MagicNumberGenerator.Generate(Combinations.Bishop[i], iterations: 10000);
+            BishopBitboard[i] = new ulong[MagicNumbers.Bishop[i].Max];
+            foreach (ulong combination in Combinations.Bishop[i])
+            {
+                ulong bitboard = GenBitboardMoves(i, combination, MovePattern.Bishop);
+                ulong index = MagicNumbers.Bishop[i].Calculate(combination);
+                BishopBitboard[i][index] = bitboard;
+            }
             
-            
-            Console.WriteLine($"Magic numbers done: {i + 1}/64");
+            RookBitboard[i] = new ulong[MagicNumbers.Rook[i].Max];
+            foreach (ulong combination in Combinations.Rook[i])
+            {
+                ulong bitboard = GenBitboardMoves(i, combination, MovePattern.Rook);
+                ulong index = MagicNumbers.Rook[i].Calculate(combination);
+                RookBitboard[i][index] = bitboard;
+            }
         }
-        
-        Console.WriteLine(Bishop.ToArrayString());
     }
     
-    private static ulong GenBitboardMoves(int square, ulong blockers, MovePattern pattern)
+    public static ulong GenBitboardMoves(int square, ulong blockers, MovePattern pattern)
     {
         (int File, int rank) origin = square.AsSquare();
         ulong moves = 0;
