@@ -2,6 +2,9 @@ namespace ChessLib.Utils;
 
 public static class ThrowHelper
 {
+    /// <summary>
+    /// Failed to parse external string-based notation (like FEN or algebraic notation)
+    /// </summary>
     public class NotationParsingException : Exception
     {
         public NotationParsingException () {}

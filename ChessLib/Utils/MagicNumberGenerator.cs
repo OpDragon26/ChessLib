@@ -4,6 +4,9 @@ namespace ChessLib.Utils;
 
 public static class MagicNumberGenerator
 {
+    /// <summary>
+    /// Generates a magic number with a given shift for a set of distinct ulongs, and attempts to increase the shift
+    /// </summary>
     public static MagicNumber Generate(ulong[] combinations, int shift = 48, bool improve = false, bool log = false)
     {
         int minShift = shift;
@@ -28,6 +31,9 @@ public static class MagicNumberGenerator
         }
     }
 
+    /// <summary>
+    /// For a small amount of values. Generates many magic numbers for a set of combinations and attempts to increase the shift. Returns the best one found.
+    /// </summary>
     public static MagicNumber Generate(ulong[] combinations, int iterations, int shift = 48, bool improve = true, bool log = false)
     {
         MagicNumber best = new();
@@ -49,6 +55,9 @@ public static class MagicNumberGenerator
         return best;
     }
 
+    /// <summary>
+    /// For a large set of values. Generates a magic number with a given shift for a set of distinct ulongs using multiple threads.
+    /// </summary>
     public static MagicNumber GenerateParallel(ulong[] combinations, int threads = 5, int shift = 48, bool log = false)
     {
         bool finished = false;
@@ -94,7 +103,7 @@ public static class MagicNumberGenerator
         
         return magic;
     }
-
+    
     private static bool IsValid(this MagicNumber number, ulong[] combinations, HashSet<ulong> result, out ulong max)
     {
         max = 0;

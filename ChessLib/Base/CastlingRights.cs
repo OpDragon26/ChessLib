@@ -1,5 +1,8 @@
 namespace ChessLib.Base;
 
+/// <summary>
+/// Stores the long and short castling rights for each side
+/// </summary>
 public struct CastlingRights(byte castling = 0b1111)
 {
     private byte Castling = castling;

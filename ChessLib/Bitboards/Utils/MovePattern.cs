@@ -1,9 +1,12 @@
 namespace ChessLib.Bitboards.Utils;
 
-public class MovePattern((int file, int rank)[] offsets, bool repeat)
+/// <summary>
+/// Stores all directions a piece can move in as tuples, as well as whether the piece is a sliding piece (rooks, bishops, queens) or not
+/// </summary>
+public class MovePattern((int file, int rank)[] offsets, bool sliding)
 {
     public readonly (int file, int rank)[] Offsets = offsets;
-    public readonly bool Repeat = repeat;
+    public readonly bool Sliding = sliding;
     
     public static readonly MovePattern Rook = new MovePattern(
     [

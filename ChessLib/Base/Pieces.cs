@@ -1,13 +1,11 @@
 ﻿namespace ChessLib.Base;
 
+/// <summary>
+/// Byte constants representing pieces
+/// </summary>
 public static class Pieces
 {
-    /*
-     * Each piece is given a byte
-     * The least significant (last) bit represents the piece color, so white pieces are even and black pieces are odd
-     * 3 bits represent the piece
-     */
-    
+    // objective values: contains piece type and color
     public const byte Empty = 0;
 
     public const byte WPawn = 2; // 0010
@@ -23,6 +21,7 @@ public static class Pieces
     public const byte WKing = 12; // 1100
     public const byte BKing = 13; // 1101
 
+    // type values: irrespective of color
     public const byte Pawn = 0b001;
     public const byte Knight = 0b010;
     public const byte Bishop = 0b011;

@@ -1,5 +1,8 @@
 ﻿namespace ChessLib.Magic_Lookup;
 
+/// <summary>
+/// Contains the information required to perform magic lookup
+/// </summary>
 public static class MagicNumbers
 {
     public static readonly MagicNumber[] Rook =

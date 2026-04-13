@@ -9,12 +9,13 @@ namespace ChessLib.Magic_Lookup;
 /// </summary>
 public static class Moves
 {
+    // Magic lookup tables for legal moves
+    
     private static bool Initialized;
     
     public static readonly ulong[][] RookBitboard = new ulong[64][];
     public static readonly ulong[][] BishopBitboard = new ulong[64][];
     public static readonly ulong[][] KnightBitboard = new ulong[64][];
-    public static readonly ulong[][] QueenBitboard = new ulong[64][];
     public static readonly ulong[][] KingBitboard = new ulong[64][];
 
     public static void Init()
@@ -43,11 +44,14 @@ public static class Moves
         }
     }
     
+    /// <summary>
+    /// Calculates the bitboard of legal moves from a square given a set of blockers and a piece movement pattern
+    /// </summary>
     public static ulong GenBitboardMoves(int square, ulong blockers, MovePattern pattern)
     {
         (int File, int rank) origin = square.AsSquare();
         ulong moves = 0;
-        int l = pattern.Repeat ? 8 : 2;
+        int l = pattern.Sliding ? 8 : 2;
         
         
         foreach ((int file, int rank) offset in pattern.Offsets)

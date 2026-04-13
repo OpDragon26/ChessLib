@@ -32,6 +32,12 @@ public static class Combinations
         }
     }
 
+    /// <summary>
+    /// Returns an array of all possible combination of bits in places where the bit of the mask is 1 using PDEP
+    /// </summary>
+    /// <example>
+    /// 0b0110 -> [0b0000, 0b0010, 0b0100, 0b0110]
+    /// </example>
     public static ulong[] GetCombinations(ulong mask)
     {
         int k = BitOperations.PopCount(mask);

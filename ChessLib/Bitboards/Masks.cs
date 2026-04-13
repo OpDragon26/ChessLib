@@ -4,8 +4,17 @@ using static ChessLib.Bitboards.Utils.MaskUtils;
 
 namespace ChessLib.Bitboards;
 
+/// <summary>
+/// Contains all necessary masks as bitboards
+/// </summary>
 public static class Masks
 {
+    // A mask is a set of squares considered relevant for a given situation. By using an AND operation between a
+    // bitboard and a mask, you get back the relevant squares of the bitboard
+    // Move bitboards contain the squares a piece could move to from a given square (index) on an empty board
+    // When calculating legal moves, blocking pieces not relevant to the movement of the given piece can be filtered
+    // out using a mask.
+    
     private static bool Initialized;
 
     public static readonly ulong[] Rook = new ulong[64];
@@ -29,7 +38,7 @@ public static class Masks
             King[square] = GenKingMask(square);
         }
     }
-
+    
     private static ulong GenKingMask(int square)
     {
         ulong mask = 0;
@@ -64,7 +73,7 @@ public static class Masks
         (int file, int rank) origin = square.AsSquare();
         ulong mask = 0;
         
-        int l = pattern.Repeat ? 8 : 2;
+        int l = pattern.Sliding ? 8 : 2;
         
         foreach ((int file, int rank) offset in pattern.Offsets)
         {

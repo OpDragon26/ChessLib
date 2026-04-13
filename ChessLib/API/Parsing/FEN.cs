@@ -6,6 +6,9 @@ namespace ChessLib.API.Parsing;
 
 public static class FEN
 {
+    /// <summary>
+    /// Parse a FEN string and return a board
+    /// </summary>
     public static Board ParseFEN(string fen)
     {
         string[] data = fen.Split(' ');

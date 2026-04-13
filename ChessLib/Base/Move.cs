@@ -7,6 +7,9 @@ using ChessLib.Utils;
 
 namespace ChessLib.Base;
 
+/// <summary>
+/// Contains all information necessary to make a move
+/// </summary>
 public readonly struct Move(int source, int target, byte promotion = 0, Flag flag = Flag.None)
 {
     public readonly int Source = source;
@@ -49,10 +52,13 @@ public readonly struct Move(int source, int target, byte promotion = 0, Flag fla
 
     public override string ToString()
     {
-        return Source.ToAlgebraic() + Target.ToAlgebraic() + DefaultFormatting.ASCII.FormatPiece(promotion);
+        return Source.ToAlgebraic() + Target.ToAlgebraic() + DefaultFormatting.ASCII.FormatPiece(Promotion);
     }
 }
 
+/// <summary>
+/// A flag to represent types of moves
+/// </summary>
 public enum Flag : byte
 {
     None,

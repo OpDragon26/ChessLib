@@ -1,4 +1,5 @@
-﻿using ChessLib.Utils;
+﻿using System.Diagnostics;
+using ChessLib.Utils;
 
 namespace ChessLib.API.Generic;
 
@@ -24,7 +25,7 @@ public readonly struct Coordinate(Perspective perspective, int file, int rank)
             Perspective.Objective => this,
             Perspective.White => new Coordinate(File, 7-Rank),
             Perspective.Black => new Coordinate(7-File, Rank),
-            _ => throw new Exception("no")
+            _ => throw new UnreachableException("Invalid perspective")
         };
     }
     
@@ -35,7 +36,7 @@ public readonly struct Coordinate(Perspective perspective, int file, int rank)
             Perspective.Objective => new Coordinate(File, 7-Rank),
             Perspective.White => this,
             Perspective.Black => new Coordinate(7-File, 7-Rank),
-            _ => throw new Exception("no")
+            _ => throw new UnreachableException("Invalid perspective")
         };
     }
     
@@ -46,7 +47,7 @@ public readonly struct Coordinate(Perspective perspective, int file, int rank)
             Perspective.Objective => new Coordinate(7-File, Rank),
             Perspective.White => new Coordinate(7-File, 7-Rank),
             Perspective.Black => this,
-            _ => throw new Exception("no")
+            _ => throw new UnreachableException("Invalid perspective")
         };
     }
 

@@ -3,10 +3,9 @@ using ChessLib.Base.Utils;
 
 namespace ChessLib.Base;
 
-/*
- * Stores piece positions as bitboards
- * Index is the piece value
- */
+/// <summary>
+/// Stores piece positions as bitboards for each side, using the piece code as the index
+/// </summary>
 
 [InlineArray(14)]
 public struct Bitboard

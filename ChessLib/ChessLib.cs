@@ -7,6 +7,9 @@ public static class ChessLib
 {
     public static InitStage InitStage = InitStage.Uninitialized;
     
+    /// <summary>
+    /// Initializes the library and completes preprocessing steps. Necessary for many functions
+    /// </summary>
     public static void Init()
     {
         if (InitStage != InitStage.Uninitialized)

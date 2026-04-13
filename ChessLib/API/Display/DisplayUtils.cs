@@ -23,21 +23,33 @@ public static class DisplayUtils
         return index.AsSquare().ToAlgebraic();
     }
     
+    /// <summary>
+    /// Returns the file char for a given file
+    /// </summary>
     public static char AsFile(this int file)
     {
         return Files[file];
     }
     
+    /// <summary>
+    /// Returns the rank char for a given file
+    /// </summary>
     public static char AsRank(this int rank)
     {
         return Ranks[rank];
     }
 
+    /// <summary>
+    /// Returns the file index of a char
+    /// </summary>
     public static int GetFile(this char file)
     {
         return file - 'a';
     }
 
+    /// <summary>
+    /// Returns the rank index of a char
+    /// </summary>
     public static int GetRank(this char rank)
     {
         return rank - '1';

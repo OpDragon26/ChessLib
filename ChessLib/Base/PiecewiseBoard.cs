@@ -2,10 +2,9 @@
 
 namespace ChessLib.Base;
 
-/*
- * Stores the pieces as they appear on the board
- * Starts at a1
- */
+/// <summary>
+/// Stores the pieces as they appear on the board, starting at a1
+/// </summary>
 
 [InlineArray(64)]
 public struct PiecewiseBoard

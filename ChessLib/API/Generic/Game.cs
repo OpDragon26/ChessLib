@@ -3,6 +3,9 @@ using ChessLib.Base;
 
 namespace ChessLib.API.Generic;
 
+/// <summary>
+/// Contains the move and board at every step in a game of chess
+/// </summary>
 public class Game(Board starting) : IEnumerable<Node>
 {
     private readonly List<Node> _moves = new();

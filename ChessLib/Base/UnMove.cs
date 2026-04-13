@@ -1,5 +1,8 @@
 namespace ChessLib.Base;
 
+/// <summary>
+/// Contains all information necessary to reverse a move
+/// </summary>
 public readonly struct UnMove(int source, int target, byte capture = 0, int enPassantSquare = 0, bool promotion = false, Flag flag = Flag.None)
 {
     public readonly int Source = source;
