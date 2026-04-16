@@ -19,12 +19,15 @@ public static class Moves
     public static readonly ulong[][] BishopBitboard = new ulong[64][];
 
     public static readonly Move[][][] Rook = new Move[64][][];
-    public static readonly Move[][][] RookFree = new Move[64][][];
     public static readonly Move[][][] Bishop = new Move[64][][];
-    public static readonly Move[][][] BishopFree = new Move[64][][];
     public static readonly Move[][][] Knight = new Move[64][][];
     public static readonly Move[][][] King = new Move[64][][];
 
+    public static class Lookup
+    {
+        
+    }
+    
     public static void Init()
     {
         if (Initialized)
@@ -35,46 +38,40 @@ public static class Moves
         {
             BishopBitboard[s] = new ulong[MagicNumbers.Bishop[s].Max];
             Bishop[s] = new Move[MagicNumbers.Bishop[s].Max][];
-            BishopFree[s] = new Move[MagicNumbers.Bishop[s].Max][];
             foreach (ulong combination in Combinations.Bishop[s])
             {
                 ulong bitboard = GenBitboardMoves(s, combination, MovePattern.Bishop, true);
                 ulong index = MagicNumbers.Bishop[s].Calculate(combination);
                 
                 BishopBitboard[s][index] = bitboard;
-                Bishop[s][index] = GenMoveSet(s, GenBitboardMoves(s, combination, MovePattern.Bishop, false));
-                BishopFree[s][index] = GenMoveSet(s, combination);
+                Bishop[s][index] = GenMoveSet(s, combination);
             }
             
             RookBitboard[s] = new ulong[MagicNumbers.Rook[s].Max];
             Rook[s] = new Move[MagicNumbers.Rook[s].Max][];
-            RookFree[s] = new Move[MagicNumbers.Rook[s].Max][];
             foreach (ulong combination in Combinations.Rook[s])
             {
                 ulong bitboard = GenBitboardMoves(s, combination, MovePattern.Rook, true);
                 ulong index = MagicNumbers.Rook[s].Calculate(combination);
                 
                 RookBitboard[s][index] = bitboard;
-                Rook[s][index] = GenMoveSet(s, GenBitboardMoves(s, combination, MovePattern.Rook, false));
-                RookFree[s][index] = GenMoveSet(s, combination);
+                Rook[s][index] = GenMoveSet(s, combination);
             }
 
             Knight[s] = new Move[MagicNumbers.Knight[s].Max][];
             foreach (ulong combination in Combinations.Knight[s])
             {
-                ulong bitboard = Masks.Knight[s] & ~combination;
                 ulong index = MagicNumbers.Knight[s].Calculate(combination);
 
-                Knight[s][index] = GenMoveSet(s, bitboard);
+                Knight[s][index] = GenMoveSet(s, combination);
             }
             
             King[s] = new Move[MagicNumbers.King[s].Max][];
             foreach (ulong combination in Combinations.King[s])
             {
-                ulong bitboard = Masks.King[s] & ~combination;
                 ulong index = MagicNumbers.King[s].Calculate(combination);
 
-                King[s][index] = GenMoveSet(s, bitboard);
+                King[s][index] = GenMoveSet(s, combination);
             }
         }
     }
