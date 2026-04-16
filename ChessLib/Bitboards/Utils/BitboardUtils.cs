@@ -1,4 +1,5 @@
-﻿using ChessLib.Utils;
+﻿using System.Numerics;
+using ChessLib.Utils;
 
 namespace ChessLib.Bitboards.Utils;
 
@@ -15,6 +16,14 @@ public static class BitboardUtils
     public static ulong ToBitboard(this int index)
     {
         return 1ul << index;
+    }
+
+    /// <summary>
+    /// Returns the index represented by the single-square bitboard
+    /// </summary>
+    public static int ToIndex(this ulong bitboard)
+    {
+        return BitOperations.TrailingZeroCount(bitboard);
     }
     
     /// <summary>
@@ -71,5 +80,21 @@ public static class BitboardUtils
     public static void SwitchBit(this ref ulong bitboard, int index)
     {
         bitboard ^= index.ToBitboard();
+    }
+
+    /// <summary>
+    /// Returns a bitboard with only the least significant bit of the original bitboard set to 1;
+    /// </summary>
+    public static ulong LastBitSet(this ulong bitboard)
+    {
+        return bitboard & (1UL << BitOperations.TrailingZeroCount(bitboard));
+    }
+
+    /// <summary>
+    /// PopCount
+    /// </summary>
+    public static int Count(this ulong bitboard)
+    {
+        return BitOperations.PopCount(bitboard);
     }
 }

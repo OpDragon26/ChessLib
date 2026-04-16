@@ -24,6 +24,14 @@ public readonly struct MagicNumber(ulong number, int shift, int max)
     
     public override string ToString()
     {
+        return $"({Number.ToHex()} >> {Shift} | {Max})";
+    }
+    
+    /// <summary>
+    /// String for creating a magic number object with matching parameters
+    /// </summary>
+    public string ObjectString()
+    {
         return $"new({Number.ToHex()}, {Shift}, {Max})";
     }
 

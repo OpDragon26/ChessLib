@@ -56,4 +56,56 @@ public static class MagicNumbers
         new(0x2f66d18770f3c313, 56, 252), new(0x4a1d2eaf17e5040b, 56, 255), new(0x2a8a0d815aafd1d8, 56, 256),
         new(0x378514b22abebfb0, 56, 255)
     ];
+
+    public static readonly MagicNumber[] Knight =
+    [
+        new(0x52e4e625a0cfe386, 62, 4), new(0x7f0db68c00331802, 61, 8), new(0x714b104fae44a291, 60, 16),
+        new(0x77430c40f7119219, 60, 16), new(0x2811c431e70f2632, 60, 16), new(0x7ccf819c65142bf8, 60, 16),
+        new(0x21a4c31a242dcf08, 61, 8), new(0x2f946d3a615c4b1e, 62, 4), new(0x194d7043db0cc374, 61, 8),
+        new(0x3894f620f69d1c61, 60, 16), new(0xace58204efddcfa, 57, 126), new(0x763c527cc26360d3, 57, 126),
+        new(0x3ba7327ebff1fb89, 57, 123), new(0xc284101053566dc, 58, 64), new(0x2c0e8f550a02f7e1, 60, 16),
+        new(0xcb6617ecd8ad3ad, 61, 8), new(0x24b814cdbcdff1ae, 60, 16), new(0x103302a3a024d5f8, 58, 64),
+        new(0x2808024607803f68, 56, 256), new(0x617a1e458a74061c, 55, 511), new(0x12aacb4959589730, 55, 512),
+        new(0x3b5557bfefab457b, 55, 511), new(0x277e8a2800f960e4, 57, 127), new(0x5846505f02077412, 60, 16),
+        new(0x2bcd25a8e3131fa, 60, 16), new(0x6f205ccc7df34b4d, 57, 126), new(0x6febde092035e916, 55, 511),
+        new(0x229800424d8c0524, 55, 507), new(0x58f401c035004397, 56, 256), new(0x27141c794138391c, 55, 509),
+        new(0x4b64e04095007283, 57, 128), new(0x3e98d39145ca7a7b, 60, 16), new(0x5ebd08217be861dd, 60, 16),
+        new(0x1b58f03040958816, 58, 64), new(0x539ff00400307300, 56, 256), new(0x5e68fc04009b0110, 56, 256),
+        new(0xfa07400fbcb103e, 55, 509), new(0x12cc8c0b00318018, 55, 479), new(0x46672665cb6be04, 57, 123),
+        new(0x3bfcb87c5b41506, 60, 16), new(0x50899e4388cf90e9, 60, 16), new(0x18b6bd205e93c910, 58, 64),
+        new(0x145446701401c901, 56, 256), new(0x1e7ee54244001f04, 56, 256), new(0x2937767201205b84, 56, 256),
+        new(0x1b8bbf9b01040c86, 56, 256), new(0x3631d422818c07db, 58, 64), new(0xb15977e1910249f, 60, 16),
+        new(0x6128f73656a5322, 61, 8), new(0x5abb6c67c49c0f90, 60, 16), new(0x6c8b269a141c1181, 58, 64),
+        new(0x62cc96254c0c01ab, 58, 64), new(0x1e371c7e9e038042, 58, 64), new(0xea66dfcf100c241, 58, 64),
+        new(0x7fcf73f8070f04f4, 60, 16), new(0x69ccc89faa420009, 61, 8), new(0x16965dfd8ec09ed5, 62, 4),
+        new(0x2c59276dbd6168ae, 61, 8), new(0x1fb4511a75882839, 60, 16), new(0x45e0ce7d69941410, 60, 16),
+        new(0xb12402a01d1c678, 60, 16), new(0x571e57ec5f5a2822, 60, 16), new(0x18f50bfad5770574, 61, 8),
+        new(0x73207771f70374de, 62, 4)
+    ];
+
+    public static readonly MagicNumber[] King =
+    [
+        new(0x2190426a82ba40ec, 61, 8), new(0x4c60107336b73ec1, 59, 32), new(0x5e3016382eb59217, 59, 32),
+        new(0x130819762e7d82f9, 59, 32), new(0xd8c07853e767c03, 59, 32), new(0x1f22002df57bb089, 59, 32),
+        new(0x56e30028ff058fee, 59, 32), new(0x648129714353cf4c, 61, 8), new(0x38c160ed36770875, 59, 32),
+        new(0x605b34fa8b0e2e4b, 55, 511), new(0x424dac088f3a10, 55, 492), new(0x58018b0006518357, 55, 510),
+        new(0x19501cc20e85eee3, 55, 512), new(0x55b4b6eaa2bf10d4, 55, 510), new(0x4e62cc8905411e46, 55, 511),
+        new(0x25a0910444d91d55, 59, 32), new(0x69d440602b10d66d, 59, 32), new(0x76aa7bd32e8f7d3e, 55, 511),
+        new(0x34217160b9d09ed8, 55, 511), new(0x2ddf17d01a4f6b80, 55, 511), new(0x3bbc4250087afc36, 55, 510),
+        new(0x1f8c883d747f41aa, 55, 511), new(0x6a7679baff7ddab4, 55, 511), new(0x2b7ed18100e96b54, 59, 32),
+        new(0x6c15f89041b771c0, 59, 32), new(0x4e65ed434403cf1f, 55, 507), new(0x21cc7d46804e707f, 55, 510),
+        new(0x436b2f97463340b, 55, 511), new(0x6e58f69c1b8cde8c, 55, 511), new(0x79a1841238db3285, 55, 511),
+        new(0x4f28a0ad01348637, 55, 511), new(0x43009f0082660e4b, 59, 32), new(0xe83b8e0c1f8369b, 59, 32),
+        new(0x553b4838f59a553d, 55, 511), new(0x45e37dde5f8fc762, 55, 509), new(0x7f70e5ff2f3834ff, 55, 510),
+        new(0x615e756d6e70a681, 55, 511), new(0x1f214861e2aba011, 55, 511), new(0x1341d95546cead45, 55, 511),
+        new(0x4a6dc37e1830263, 59, 32), new(0x7a7d3896766f3f1d, 59, 32), new(0x44ed281b20c9c85a, 55, 511),
+        new(0x3d0e2bf15e4c1f0c, 55, 511), new(0x422171c8ba212ae5, 55, 511), new(0x228586134d30fc00, 55, 512),
+        new(0x2a9252c10e157eac, 55, 512), new(0x6b4f80fcca683418, 55, 512), new(0x6c0f280b6d01e4c3, 59, 32),
+        new(0x195763b029c17138, 59, 32), new(0xd0bdb72f70e0621, 55, 512), new(0x58b29580de4d81c7, 55, 512),
+        new(0x23590eabd1f80263, 56, 256), new(0x59838523bd5d804c, 56, 256), new(0x6b97cd50bda5477a, 55, 511),
+        new(0x2fb5cccacd90982f, 55, 511), new(0x66c5695ef027c0b5, 59, 32), new(0x561ab8e1e4e3927, 61, 8),
+        new(0x7306791bbf46600c, 59, 32), new(0x4a8ce392517cf059, 59, 32), new(0x59f390e7cc22380b, 59, 32),
+        new(0x4fed0464442a1884, 59, 32), new(0x11dfa7300461dc46, 59, 32), new(0x4a7983261dbe2a21, 59, 32),
+        new(0x42f1b3083a80ea55, 61, 8)
+    ];
 }

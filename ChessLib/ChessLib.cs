@@ -1,6 +1,5 @@
 using ChessLib.Bitboards;
 using ChessLib.Magic_Lookup;
-
 namespace ChessLib;
 
 public static class ChessLib
@@ -15,7 +14,7 @@ public static class ChessLib
         if (InitStage != InitStage.Uninitialized)
             return;
         InitStage = InitStage.Ongoing;
-        
+            
         Masks.Init();
         Combinations.Init();
         Moves.Init();
