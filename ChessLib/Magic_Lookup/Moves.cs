@@ -26,9 +26,42 @@ public static class Moves
 
     public static class Lookup
     {
+        public static ulong RookBitboardLookup(int square, ulong friendly, ulong enemy)
+        {
+            ulong blockers = (friendly | enemy) & Masks.Rook[square];
+            return RookBitboard.Lookup(MagicNumbers.Rook, square, blockers);
+        }
         
+        public static ulong BishopBitboardLookup(int square, ulong friendly, ulong enemy)
+        {
+            ulong blockers = (friendly | enemy) & Masks.Bishop[square];
+            return BishopBitboard.Lookup(MagicNumbers.Bishop, square, blockers);
+        }
+
+        public static Move[] RookLookup(int square, ulong friendly, ulong enemy)
+        {
+            return Rook.Lookup(MagicNumbers.Rook, square, RookBitboardLookup(square, friendly, enemy));
+        }
+        
+        public static Move[] BishopLookup(int square, ulong friendly, ulong enemy)
+        {
+            return Bishop.Lookup(MagicNumbers.Bishop, square, BishopBitboardLookup(square, friendly, enemy));
+        }
+        
+        public static Move[] KnightLookup(int square, ulong friendly)
+        {
+            return Knight.Lookup(MagicNumbers.Knight, square, Masks.Knight[square] & ~friendly);
+        }
+        
+        public static Move[] KingLookup(int square, ulong friendly)
+        {
+            return King.Lookup(MagicNumbers.King, square, Masks.King[square] & ~friendly);
+        }
     }
     
+    /// <summary>
+    /// Initialize lookup tables
+    /// </summary>
     public static void Init()
     {
         if (Initialized)
