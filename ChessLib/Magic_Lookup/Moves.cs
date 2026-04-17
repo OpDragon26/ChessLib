@@ -2,6 +2,7 @@
 using ChessLib.Base;
 using ChessLib.Bitboards;
 using ChessLib.Bitboards.Utils;
+using ChessLib.Magic_Lookup.Utils;
 using ChessLib.Utils;
 
 namespace ChessLib.Magic_Lookup;
@@ -34,46 +35,15 @@ public static class Moves
             return;
         Initialized = true;
         
-        for (int s = 0; s < 64; s++)
-        {
-            BishopBitboard[s] = new ulong[MagicNumbers.Bishop[s].Max];
-            Bishop[s] = new Move[MagicNumbers.Bishop[s].Max][];
-            foreach (ulong combination in Combinations.Bishop[s])
-            {
-                ulong bitboard = GenBitboardMoves(s, combination, MovePattern.Bishop, true);
-                ulong index = MagicNumbers.Bishop[s].Calculate(combination);
-                
-                BishopBitboard[s][index] = bitboard;
-                Bishop[s][index] = GenMoveSet(s, combination);
-            }
-            
-            RookBitboard[s] = new ulong[MagicNumbers.Rook[s].Max];
-            Rook[s] = new Move[MagicNumbers.Rook[s].Max][];
-            foreach (ulong combination in Combinations.Rook[s])
-            {
-                ulong bitboard = GenBitboardMoves(s, combination, MovePattern.Rook, true);
-                ulong index = MagicNumbers.Rook[s].Calculate(combination);
-                
-                RookBitboard[s][index] = bitboard;
-                Rook[s][index] = GenMoveSet(s, combination);
-            }
-
-            Knight[s] = new Move[MagicNumbers.Knight[s].Max][];
-            foreach (ulong combination in Combinations.Knight[s])
-            {
-                ulong index = MagicNumbers.Knight[s].Calculate(combination);
-
-                Knight[s][index] = GenMoveSet(s, combination);
-            }
-            
-            King[s] = new Move[MagicNumbers.King[s].Max][];
-            foreach (ulong combination in Combinations.King[s])
-            {
-                ulong index = MagicNumbers.King[s].Calculate(combination);
-
-                King[s][index] = GenMoveSet(s, combination);
-            }
-        }
+        BishopBitboard.FillLookupTable(MagicNumbers.Bishop, Combinations.Bishop, 
+            (s, c) => GenBitboardMoves(s, c, MovePattern.Bishop, true));
+        RookBitboard.FillLookupTable(MagicNumbers.Rook, Combinations.Rook, 
+            (s, c) => GenBitboardMoves(s, c, MovePattern.Rook, true));
+        
+        Bishop.FillLookupTable(MagicNumbers.Bishop, Combinations.Bishop, GenMoveSet);
+        Rook.FillLookupTable(MagicNumbers.Rook, Combinations.Rook, GenMoveSet);
+        Knight.FillLookupTable(MagicNumbers.Knight, Combinations.Knight, GenMoveSet);
+        King.FillLookupTable(MagicNumbers.King, Combinations.King, GenMoveSet);
     }
     
     /// <summary>
@@ -106,6 +76,9 @@ public static class Moves
         return moves;
     }
 
+    /// <summary>
+    /// Generates a set of moves based on a bitboard
+    /// </summary>
     public static Move[] GenMoveSet(int square, ulong combination)
     {
         Move[] moves = new Move[combination.Count()];
