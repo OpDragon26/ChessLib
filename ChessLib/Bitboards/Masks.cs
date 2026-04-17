@@ -22,7 +22,12 @@ public static class Masks
     public static readonly ulong[] Knight = new ulong[64];
     public static readonly ulong[] Queen = new ulong[64];
     public static readonly ulong[] King = new ulong[64];
+    public static readonly ulong[] PawnMove = new ulong[128];
+    public static readonly ulong[] PawnCapture = new ulong[128];
     
+    /// <summary>
+    /// Generates piece masks
+    /// </summary>
     public static void Init()
     {
         if (Initialized)
@@ -37,6 +42,16 @@ public static class Masks
             Queen[square] = Rook[square] | Bishop[square];
             King[square] = GenKingMask(square);
         }
+    }
+
+    public static ulong PawnMoveLookup(int square, int color)
+    {
+        return PawnMove[square + color * 64];
+    }
+    
+    public static ulong PawnCaptureLookup(int square, int color)
+    {
+        return PawnCapture[square + color * 64];
     }
     
     private static ulong GenKingMask(int square)
