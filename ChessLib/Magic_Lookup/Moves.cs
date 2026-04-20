@@ -23,6 +23,7 @@ public static class Moves
     public static readonly Move[][][] Bishop = new Move[64][][];
     public static readonly Move[][][] Knight = new Move[64][][];
     public static readonly Move[][][] King = new Move[64][][];
+    public static readonly Move[][][] Pawn = new Move[64][][];
 
     public static class Lookup
     {
@@ -58,25 +59,18 @@ public static class Moves
             return King.Lookup(MagicNumbers.King, square, Masks.King[square] & ~friendly);
         }
 
-        public static ulong PawnMoveBitboardLookup(int square, int color, ulong pieces)
+        public static ulong PawnBitboardLookup(int square, int color, ulong friendly, ulong enemy)
         {
-            ulong blockers = pieces & Masks.GetPawnMove(square, color);
-            return RookBitboard.Lookup(MagicNumbers.Rook, square, blockers) & ~pieces;
+            ulong all = friendly | enemy;
+            ulong allDouble = all | (color == 0 ? all << 8 : all >> 8);
+            return (~allDouble & Masks.GetPawnMove(square, color))
+                   | (enemy & Masks.GetPawnCapture(square, color));
         }
         
-        public static ulong PawnCaptureBitboardLookup(int square, int color, ulong enemy)
+        public static Move[] PawnLookup(int square, int color, ulong friendly, ulong enemy)
         {
-            return enemy & Masks.GetPawnCapture(square, color);
-        }
-        
-        public static Move[] PawnMoveLookup(int square, int color, ulong pieces)
-        {
-            return Rook.Lookup(MagicNumbers.Rook, square, PawnMoveBitboardLookup(square, color, pieces));
-        }
-        
-        public static Move[] PawnCaptureLookup(int square, int color, ulong enemy)
-        {
-            return Bishop.Lookup(MagicNumbers.Bishop, square, PawnCaptureBitboardLookup(square, color, enemy));
+            ulong bitboard = PawnBitboardLookup(square, color, friendly, enemy);
+            return Pawn.Lookup(MagicNumbers.Pawn, square, bitboard);
         }
     }
     
@@ -98,6 +92,12 @@ public static class Moves
         Rook.FillLookupTable(MagicNumbers.Rook, Combinations.Rook, GenMoveSet);
         Knight.FillLookupTable(MagicNumbers.Knight, Combinations.Knight, GenMoveSet);
         King.FillLookupTable(MagicNumbers.King, Combinations.King, GenMoveSet);
+
+        MagicNumber[] magics = new MagicNumber[64];
+        for (int s = 0; s < 64; s++)
+        {
+            magics[s] = MagicNumberGenerator.Generate()
+        }
     }
     
     /// <summary>
@@ -145,5 +145,34 @@ public static class Moves
         }
 
         return moves;
+    }
+    
+    public static Move[] GenPawnMoveSet(int square, ulong combination)
+    {
+        List<Move> moves = new List<Move>();
+        for (int i = 0; i < combination.Count(); i++)
+        {
+            int target = combination.LastBitSet().ToIndex();
+            combination.DisableBit(target);
+
+            if (target < 8) // white promotion
+            {
+                moves.Add(new Move(square, target, promotion: Pieces.WQueen));
+                moves.Add(new Move(square, target, promotion: Pieces.WKnight));
+                moves.Add(new Move(square, target, promotion: Pieces.WBishop));
+                moves.Add(new Move(square, target, promotion: Pieces.WRook));
+            }
+            else if (target > 55) // black promotion
+            {
+                moves.Add(new Move(square, target, promotion: Pieces.BQueen));
+                moves.Add(new Move(square, target, promotion: Pieces.BKnight));
+                moves.Add(new Move(square, target, promotion: Pieces.BBishop));
+                moves.Add(new Move(square, target, promotion: Pieces.BRook));
+            }
+            else
+                moves.Add(new Move(square, target));
+        }
+
+        return moves.ToArray();
     }
 }

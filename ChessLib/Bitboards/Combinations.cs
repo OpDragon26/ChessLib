@@ -15,6 +15,8 @@ public static class Combinations
     public static readonly ulong[][] Knight = new ulong[64][];
     public static readonly ulong[][] Queen = new ulong[64][];
     public static readonly ulong[][] King = new ulong[64][];
+    public static readonly ulong[][] Pawn = new ulong[64][];
+    
     
     public static void Init()
     {
