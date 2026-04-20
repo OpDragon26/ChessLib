@@ -1,3 +1,4 @@
+using ChessLib.Base.Utils;
 using ChessLib.Bitboards.Utils;
 using ChessLib.Utils;
 using static ChessLib.Bitboards.Utils.MaskUtils;
@@ -41,6 +42,11 @@ public static class Masks
             Knight[square] = GenPieceMask(square, MovePattern.Knight);
             Queen[square] = Rook[square] | Bishop[square];
             King[square] = GenKingMask(square);
+
+            PawnMove[square] = GenPawnMoveMask(square, 0);
+            PawnMove[square + 64] = GenPawnMoveMask(square, 1);
+            PawnCapture[square] = GenPawnCaptureMask(square, 0);
+            PawnCapture[square + 64] = GenPawnCaptureMask(square, 1);
         }
     }
 
@@ -103,5 +109,37 @@ public static class Masks
         }
 
         return mask;
+    }
+
+    private static ulong GenPawnMoveMask(int square, int color)
+    {
+        (int file, int rank) source = square.AsSquare();
+        bool doubleMove = source.rank == (color == 0 ? 1 : 6);
+        int rankOffset = -color.GetOffset();
+
+        ulong bitboard = 0;
+        bitboard.EnableBit((source.file, source.rank + rankOffset).AsIndex());
+        if (doubleMove)
+            bitboard.EnableBit((source.file, source.rank + rankOffset * 2).AsIndex());
+        
+        return bitboard;
+    }
+    
+    private static ulong GenPawnCaptureMask(int square, int color)
+    {
+        (int file, int rank) source = square.AsSquare();
+        int rankOffset = -color.GetOffset();
+
+        ulong bitboard = 0;
+        
+        (int file, int rank) target = (source.file + 1, source.rank + rankOffset);
+        if (!target.OutOfBounds())
+            bitboard.EnableBit(target.AsIndex());
+        
+        target = (source.file - 1, source.rank + rankOffset);
+        if (!target.OutOfBounds())
+            bitboard.EnableBit(target.AsIndex());
+        
+        return bitboard;
     }
 }
