@@ -50,12 +50,12 @@ public static class Masks
         }
     }
 
-    public static ulong PawnMoveLookup(int square, int color)
+    public static ulong GetPawnMove(int square, int color)
     {
         return PawnMove[square + color * 64];
     }
     
-    public static ulong PawnCaptureLookup(int square, int color)
+    public static ulong GetPawnCapture(int square, int color)
     {
         return PawnCapture[square + color * 64];
     }

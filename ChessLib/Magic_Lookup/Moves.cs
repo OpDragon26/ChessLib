@@ -29,13 +29,13 @@ public static class Moves
         public static ulong RookBitboardLookup(int square, ulong friendly, ulong enemy)
         {
             ulong blockers = (friendly | enemy) & Masks.Rook[square];
-            return RookBitboard.Lookup(MagicNumbers.Rook, square, blockers);
+            return RookBitboard.Lookup(MagicNumbers.Rook, square, blockers) & ~friendly;
         }
         
         public static ulong BishopBitboardLookup(int square, ulong friendly, ulong enemy)
         {
             ulong blockers = (friendly | enemy) & Masks.Bishop[square];
-            return BishopBitboard.Lookup(MagicNumbers.Bishop, square, blockers);
+            return BishopBitboard.Lookup(MagicNumbers.Bishop, square, blockers) & ~friendly;
         }
 
         public static Move[] RookLookup(int square, ulong friendly, ulong enemy)
@@ -56,6 +56,27 @@ public static class Moves
         public static Move[] KingLookup(int square, ulong friendly)
         {
             return King.Lookup(MagicNumbers.King, square, Masks.King[square] & ~friendly);
+        }
+
+        public static ulong PawnMoveBitboardLookup(int square, int color, ulong pieces)
+        {
+            ulong blockers = pieces & Masks.GetPawnMove(square, color);
+            return RookBitboard.Lookup(MagicNumbers.Rook, square, blockers) & ~pieces;
+        }
+        
+        public static ulong PawnCaptureBitboardLookup(int square, int color, ulong enemy)
+        {
+            return enemy & Masks.GetPawnCapture(square, color);
+        }
+        
+        public static Move[] PawnMoveLookup(int square, int color, ulong pieces)
+        {
+            return Rook.Lookup(MagicNumbers.Rook, square, PawnMoveBitboardLookup(square, color, pieces));
+        }
+        
+        public static Move[] PawnCaptureLookup(int square, int color, ulong enemy)
+        {
+            return Bishop.Lookup(MagicNumbers.Bishop, square, PawnCaptureBitboardLookup(square, color, enemy));
         }
     }
     
