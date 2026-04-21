@@ -62,10 +62,15 @@ public static class Moves
         public static ulong PawnBitboardLookup(int square, int color, ulong friendly, ulong enemy)
         {
             ulong all = friendly | enemy;
-            ulong allDouble = all | (color == 0 ? all << 8 : all >> 8);
+            
+            ulong allMinus = all;
+            allMinus.DisableBit(square);
+            
+            ulong allDouble = all | (color == 0 ? allMinus << 8 : allMinus >> 8);
             return (~allDouble & Masks.GetPawnMove(square, color))
                    | (enemy & Masks.GetPawnCapture(square, color));
         }
+        
         
         public static Move[] PawnLookup(int square, int color, ulong friendly, ulong enemy)
         {
@@ -92,12 +97,7 @@ public static class Moves
         Rook.FillLookupTable(MagicNumbers.Rook, Combinations.Rook, GenMoveSet);
         Knight.FillLookupTable(MagicNumbers.Knight, Combinations.Knight, GenMoveSet);
         King.FillLookupTable(MagicNumbers.King, Combinations.King, GenMoveSet);
-
-        MagicNumber[] magics = new MagicNumber[64];
-        for (int s = 0; s < 64; s++)
-        {
-            magics[s] = MagicNumberGenerator.Generate()
-        }
+        Pawn.FillLookupTable(MagicNumbers.Pawn, Combinations.Pawn, GenPawnMoveSet);
     }
     
     /// <summary>

@@ -59,6 +59,14 @@ public static class Masks
     {
         return PawnCapture[square + color * 64];
     }
+
+    public static ulong GetPawnAll(int square)
+    {
+        return GetPawnMove(square, 0)
+               | GetPawnMove(square, 1)
+               | GetPawnCapture(square, 0)
+               | GetPawnCapture(square, 1);
+    }
     
     private static ulong GenKingMask(int square)
     {

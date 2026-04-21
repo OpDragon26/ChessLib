@@ -31,6 +31,7 @@ public static class Combinations
             Knight[square] = GetCombinations(Masks.Knight[square]);
             Queen[square] = GetCombinations(Masks.Queen[square]);
             King[square] = GetCombinations(Masks.King[square]);
+            Pawn[square] = GetCombinations(Masks.GetPawnAll(square));
         }
     }
 
