@@ -1,12 +1,31 @@
-﻿using ChessLib.Bitboards.Utils;
+﻿using ChessLib.Bitboards;
+using ChessLib.Bitboards.Utils;
 using ChessLib.Magic_Lookup.Utils;
 using ChessLib.Utils;
 
 namespace ChessLib.Magic_Lookup;
 
+/// <summary>
+/// Requires Combinations to be initialized first
+/// </summary>
 public static class Pins
 {
-    public static Dictionary<int, int>[][] Pin = new Dictionary<int, int>[64][];
+    public static readonly Dictionary<int, int>[][] Rook = new Dictionary<int, int>[64][];
+    public static readonly Dictionary<int, int>[][] Bishop = new Dictionary<int, int>[64][];
+    private static bool Initialized = false;
+    
+    /// <summary>
+    /// Initialize lookup tables. Requires combinations to be initialized
+    /// </summary>
+    public static void Init()
+    {
+        if (Initialized)
+            return;
+        Initialized = true;
+        
+        Rook.FillLookupTable(MagicNumbers.Rook, Combinations.Rook, (s, c) => GeneratePinState(s, c, MovePattern.Rook));
+        Bishop.FillLookupTable(MagicNumbers.Bishop, Combinations.Bishop, (s, c) => GeneratePinState(s, c, MovePattern.Bishop));
+    }
     
     public static Dictionary<int, int> GeneratePinState(int square, ulong combination, MovePattern pattern)
     {
@@ -37,13 +56,5 @@ public static class Pins
         }
 
         return pinState;
-    }
-
-    public static PinState GeneratePinState(int square, ulong combination)
-    {
-        return new(
-            GeneratePinState(square, combination, MovePattern.Rook),
-            GeneratePinState(square, combination, MovePattern.Bishop)
-            );
     }
 }

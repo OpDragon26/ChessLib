@@ -80,7 +80,7 @@ public static class Moves
     }
     
     /// <summary>
-    /// Initialize lookup tables
+    /// Initialize lookup tables. Requires combinations to be initialized
     /// </summary>
     public static void Init()
     {
