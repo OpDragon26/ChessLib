@@ -12,7 +12,28 @@ public static class Pins
 {
     public static readonly Dictionary<int, int>[][] Rook = new Dictionary<int, int>[64][];
     public static readonly Dictionary<int, int>[][] Bishop = new Dictionary<int, int>[64][];
-    private static bool Initialized = false;
+    private static bool Initialized;
+
+    public static class Lookup
+    {
+        public static Dictionary<int, int> RookLookup(int square, ulong blockers)
+        {
+            return Rook.Lookup(MagicNumbers.Rook, square, blockers & Masks.Rook[square]);
+        }
+        
+        public static Dictionary<int, int> BishopLookup(int square, ulong blockers)
+        {
+            return Bishop.Lookup(MagicNumbers.Bishop, square, blockers & Masks.Bishop[square]);
+        }
+
+        public static PinState Pin(int square, ulong blockers)
+        {
+            return new(
+                RookLookup(square, blockers),
+                BishopLookup(square, blockers)
+            );
+        }
+    }
     
     /// <summary>
     /// Initialize lookup tables. Requires combinations to be initialized
