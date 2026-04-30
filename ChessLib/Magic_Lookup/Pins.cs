@@ -36,7 +36,7 @@ public static class Pins
     }
     
     /// <summary>
-    /// Initialize lookup tables. Requires combinations to be initialized
+    /// Initialize pin lookup tables. Requires combinations to be initialized
     /// </summary>
     public static void Init()
     {

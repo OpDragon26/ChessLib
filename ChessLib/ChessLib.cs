@@ -18,6 +18,7 @@ public static class ChessLib
         Masks.Init();
         Combinations.Init();
         Moves.Init();
+        Pins.Init();
 
         InitStage = InitStage.Complete;
     }
