@@ -81,6 +81,30 @@ public static class BitboardUtils
     {
         bitboard ^= index.ToBitboard();
     }
+    
+    /// <summary>
+    /// Turns the given bit to 1 on the bitboard
+    /// </summary>
+    public static void EnableBit(this ref ulong bitboard, (int file, int rank) square)
+    {
+        bitboard |= square.ToBitboard();
+    }
+
+    /// <summary>
+    /// Turns the given bit to 0 on the bitboard
+    /// </summary>
+    public static void DisableBit(this ref ulong bitboard, (int file, int rank) square)
+    {
+        bitboard &= ~square.ToBitboard();
+    }
+
+    /// <summary>
+    /// Switches (XORs) the given bit on the bitboard
+    /// </summary>
+    public static void SwitchBit(this ref ulong bitboard, (int file, int rank) square)
+    {
+        bitboard ^= square.ToBitboard();
+    }
 
     /// <summary>
     /// Returns a bitboard with only the least significant bit of the original bitboard set to 1;
