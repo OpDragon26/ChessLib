@@ -38,4 +38,9 @@ public static class Algebraic
 
         throw new ThrowHelper.NotationParsingException($"Pawn not found: {move}");
     }
+
+    private static Move ParseRegularPieceMove(Board board, string move)
+    {
+        
+    }
 }

@@ -1,4 +1,9 @@
 using ChessLib.API.Display;
+using ChessLib.Base;
+using ChessLib.Base.Utils;
+using ChessLib.Bitboards;
+using ChessLib.Magic_Lookup;
+using ChessLib.Utils;
 
 namespace ChessLib.API.Parsing;
 
@@ -16,5 +21,30 @@ public static class ParsingUtils
         int rank = square[1].GetRank();
 
         return (file, rank);
+    }
+
+    /// <summary>
+    /// Contains information necessary for finding a piece that could move to a given square
+    /// </summary>
+    public struct FinderMask(ulong mask, byte type)
+    {
+        public ulong Mask = mask;
+        public byte Type = type;
+    }
+
+    /// <summary>
+    /// Calculates information necessary for finding a piece that could move to a given square
+    /// </summary>
+    public static FinderMask GetFinderMask(Board board, byte piece, int square)
+    {
+        return piece switch
+        {
+            Pieces.Knight => new(Masks.Knight[square], piece),
+            Pieces.Bishop => new(MagicLookup.Moves.BishopBitboard(square, board.Bitboards.All), piece),
+            Pieces.Rook => new(MagicLookup.Moves.RookBitboard(square, board.Bitboards.All), piece),
+            Pieces.Queen => new(MagicLookup.Moves.RookBitboard(square, board.Bitboards.All) | MagicLookup.Moves.BishopBitboard(square, board.Bitboards.All), piece),
+            Pieces.King => new(Masks.King[square], piece),
+            _ => throw new ThrowHelper.NotationParsingException($"Unknown piece code: {piece}")
+        };
     }
 }

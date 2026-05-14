@@ -54,7 +54,7 @@ public static class Pieces
     /// </summary>
     public const byte WKing = 12;
     /// <summary>
-    /// Black king: 0010 = 13
+    /// Black king: 1101 = 13
     /// </summary>
     public const byte BKing = 13;
 
