@@ -2,6 +2,7 @@
 using ChessLib.API.Parsing;
 using ChessLib.Base.Utils;
 using ChessLib.Bitboards.Utils;
+using ChessLib.Utils;
 using static ChessLib.Base.Pieces;
 
 namespace ChessLib.Base;
@@ -18,6 +19,9 @@ public class Board
     public int HalfMoveClock;
     
     public byte this[int index] => PiecewiseBoard[index];
+    public byte this[Index index] => PiecewiseBoard[index];
+    public byte this[int file, int rank] => PiecewiseBoard[(file, rank).AsIndex()];
+    public byte this[(int file, int rank) square] => PiecewiseBoard[square.AsIndex()];
     public byte this[Coordinate c] => this[c.AsIndex()];
     public static Board StartingBoard => FEN.ParseFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
     

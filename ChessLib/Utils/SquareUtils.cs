@@ -29,6 +29,22 @@ public static class SquareUtils
     }
 
     /// <summary>
+    /// Offsets the given tuple's file by a set amount, then returns the result
+    /// </summary>
+    public static (int file, int rank) OffsetFile(this (int file, int rank) square, int offset)
+    {
+        return (square.file + offset, square.rank);
+    }
+    
+    /// <summary>
+    /// Offsets the given tuple's rank by a set amount, then returns the result
+    /// </summary>
+    public static (int file, int rank) OffsetRank(this (int file, int rank) square, int offset)
+    {
+        return (square.file, square.rank + offset);
+    }
+
+    /// <summary>
     /// Checks whether the given square is outside the board
     /// </summary>
     public static bool OutOfBounds(this (int file, int rank) square)

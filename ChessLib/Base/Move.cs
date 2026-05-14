@@ -22,6 +22,9 @@ public readonly struct Move(int source, int target, byte promotion = 0, Flag fla
     public Move(Coordinate source, Coordinate target, byte promotion = 0, Flag flag = Flag.None)
         : this(source.AsIndex(), target.AsIndex(), promotion, flag) {}
 
+    public Move((int file, int rank) source, (int file, int rank) target, byte promotion = 0, Flag flag = Flag.None)
+        : this(source.AsIndex(), target.AsIndex(), promotion, flag) {}
+    
     public Move(string source, string target, byte promotion = 0, Flag flag = Flag.None)
         : this(source.ParseSquare().AsIndex(), target.ParseSquare().AsIndex(), promotion, flag) {}
 
