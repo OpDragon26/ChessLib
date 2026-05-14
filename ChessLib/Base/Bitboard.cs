@@ -20,4 +20,9 @@ public struct Bitboard
     {
         return this[type.AsColor(0)] | this[type.AsColor(1)];
     }
+    
+    public ulong AllColor(int color)
+    {
+        return color == 0 ? AllWhite : AllBlack;
+    }
 }

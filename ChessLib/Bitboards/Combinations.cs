@@ -17,7 +17,9 @@ public static class Combinations
     public static readonly ulong[][] King = new ulong[64][];
     public static readonly ulong[][] Pawn = new ulong[64][];
     
-    
+    /// <summary>
+    /// Initializes combinations. Requires Masks to be initialized first
+    /// </summary>
     public static void Init()
     {
         if (Initialized) 
