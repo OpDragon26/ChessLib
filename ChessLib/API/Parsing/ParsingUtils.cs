@@ -2,6 +2,7 @@ using ChessLib.API.Display;
 using ChessLib.Base;
 using ChessLib.Base.Utils;
 using ChessLib.Bitboards;
+using ChessLib.Bitboards.Utils;
 using ChessLib.Magic_Lookup;
 using ChessLib.Utils;
 
@@ -33,6 +34,17 @@ public static class ParsingUtils
     }
 
     /// <summary>
+    /// Type of disambiguation
+    /// </summary>
+    public enum Disambiguation : byte
+    {
+        None,
+        File,
+        Rank,
+        Double,
+    }
+
+    /// <summary>
     /// Calculates information necessary for finding a piece that could move to a given square
     /// </summary>
     public static FinderMask GetFinderMask(Board board, byte piece, int square)
@@ -46,5 +58,14 @@ public static class ParsingUtils
             Pieces.King => new(Masks.King[square], piece),
             _ => throw new ThrowHelper.NotationParsingException($"Unknown piece code: {piece}")
         };
+    }
+
+    /// <summary>
+    /// Uses a finder mask to figure out which piece moved to the given location
+    /// </summary>
+    public static int FindMovingPiece(Board board, FinderMask finder, Disambiguation disambiguation, int d = -1)
+    {
+        ulong potentialPieces = finder.Mask & board.Bitboards[finder.Type.AsColor(board.Turn)];
+        if (disambiguation == Disambiguation.File)
     }
 }
