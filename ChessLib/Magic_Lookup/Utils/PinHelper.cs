@@ -24,7 +24,7 @@ public static class PinHelper
     }
 
     /// <summary>
-    /// Returns the set of bishop and rook pins on a given board. !Not to be used when performance is important!
+    /// Returns the set of bishop and rook pins on a given board. !Do not use when performance is important!
     /// </summary>
     public static PinState FindPins(this Board board)
     {
