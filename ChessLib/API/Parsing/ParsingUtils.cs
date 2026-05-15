@@ -4,6 +4,7 @@ using ChessLib.Base.Utils;
 using ChessLib.Bitboards;
 using ChessLib.Bitboards.Utils;
 using ChessLib.Magic_Lookup;
+using ChessLib.Magic_Lookup.Utils;
 using ChessLib.Utils;
 
 namespace ChessLib.API.Parsing;
@@ -27,10 +28,11 @@ public static class ParsingUtils
     /// <summary>
     /// Contains information necessary for finding a piece that could move to a given square
     /// </summary>
-    public struct FinderMask(ulong mask, byte type)
+    public struct FinderMask(ulong mask, byte type, int target)
     {
-        public ulong Mask = mask;
-        public byte Type = type;
+        public readonly ulong Mask = mask;
+        public readonly byte Type = type;
+        public readonly int Target = target;
     }
 
     /// <summary>
@@ -47,25 +49,65 @@ public static class ParsingUtils
     /// <summary>
     /// Calculates information necessary for finding a piece that could move to a given square
     /// </summary>
-    public static FinderMask GetFinderMask(Board board, byte piece, int square)
+    public static FinderMask GetFinderMask(Board board, byte type, int square)
     {
-        return piece switch
+        ulong pieces = board.Bitboards.All;
+        return type switch
         {
-            Pieces.Knight => new(Masks.Knight[square], piece),
-            Pieces.Bishop => new(MagicLookup.Moves.BishopBitboard(square, board.Bitboards.All), piece),
-            Pieces.Rook => new(MagicLookup.Moves.RookBitboard(square, board.Bitboards.All), piece),
-            Pieces.Queen => new(MagicLookup.Moves.RookBitboard(square, board.Bitboards.All) | MagicLookup.Moves.BishopBitboard(square, board.Bitboards.All), piece),
-            Pieces.King => new(Masks.King[square], piece),
-            _ => throw new ThrowHelper.NotationParsingException($"Unknown piece code: {piece}")
+            Pieces.Knight => new(Masks.Knight[square], type, square),
+            Pieces.Bishop => new(MagicLookup.Moves.BishopBitboard(square, pieces), type, square),
+            Pieces.Rook => new(MagicLookup.Moves.RookBitboard(square, pieces), type, square),
+            Pieces.Queen => new(MagicLookup.Moves.RookBitboard(square, pieces) | MagicLookup.Moves.BishopBitboard(square, pieces), type, square),
+            Pieces.King => new(Masks.King[square], type, square),
+            _ => throw new ThrowHelper.PieceTypeNotSupported($"Function does not accept type: {type}")
         };
     }
 
     /// <summary>
     /// Uses a finder mask to figure out which piece moved to the given location
     /// </summary>
-    public static int FindMovingPiece(Board board, FinderMask finder, Disambiguation disambiguation, int d = -1)
+    public static int FindMovingPiece(Board board, FinderMask finder, Disambiguation disambiguation = Disambiguation.None, int d = -1)
     {
         ulong potentialPieces = finder.Mask & board.Bitboards[finder.Type.AsColor(board.Turn)];
         if (disambiguation == Disambiguation.File)
+            potentialPieces &= MaskUtils.GetFile(d);
+        if (disambiguation == Disambiguation.Rank)
+            potentialPieces &= MaskUtils.GetRank(d);
+
+        if (ulong.PopCount(potentialPieces) == 1)
+            return potentialPieces.ToIndex();
+
+        potentialPieces.FilterPins(board, finder);
+        
+        if (ulong.PopCount(potentialPieces) == 1)
+            return potentialPieces.ToIndex();
+
+        throw new ThrowHelper.PieceAmbiguityException($"Unable to determine moving piece - expected: 1, found instead: {ulong.PopCount(potentialPieces)}");
+    }
+
+    private static void FilterPins(this ref ulong potentialPieces, Board board, FinderMask finder)
+    {
+        for (int s = 0; s < 64; s++)
+        {
+            PinState pins = board.FindPins();
+
+            if (potentialPieces.Occupied(s))
+            {
+                ulong moves = MagicLookup.Moves.SwitchBitboard(finder.Type, s, board.Bitboards.All);
+                if (pins.Bishop.TryGetValue(s, out int bishop))
+                {
+                    ulong pinLine = PinHelper.GetPinLine(board, s, bishop);
+                    if (!(pinLine & moves).Occupied(finder.Target))
+                        potentialPieces.DisableBit(s);
+                        
+                }
+                else if (pins.Rook.TryGetValue(s, out int rook))
+                {
+                    ulong pinLine = PinHelper.GetPinLine(board, s, rook);
+                    if (!(pinLine & moves).Occupied(finder.Target))
+                        potentialPieces.DisableBit(s);
+                }
+            }
+        }
     }
 }

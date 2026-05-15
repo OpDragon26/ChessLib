@@ -1,6 +1,7 @@
 ﻿using ChessLib.Base;
 using ChessLib.Base.Utils;
 using ChessLib.Utils;
+using static ChessLib.API.Parsing.ParsingUtils;
 
 namespace ChessLib.API.Parsing;
 
@@ -17,6 +18,7 @@ public static class Algebraic
         return move.Length switch
         {
             2 => ParseForwardPawn(board, move), // pawn move forward: e4
+            3 => ParseRegularPieceMove(board, move), // undisambiguated piece move: Nc3
             _ => throw new ThrowHelper.NotationParsingException($"Incorrect formatting: {move}")
         };
     }
@@ -41,6 +43,13 @@ public static class Algebraic
 
     private static Move ParseRegularPieceMove(Board board, string move)
     {
+        byte type = Piece.ParsePiece(move[0]);
         
+        int target = move[1..].ParseSquare().AsIndex();
+
+        FinderMask finder = GetFinderMask(board, type, target);
+        int source = FindMovingPiece(board, finder);
+        
+        return new Move(source, target);
     }
 }

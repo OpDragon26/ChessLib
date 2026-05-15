@@ -55,4 +55,9 @@ public static class PinHelper
                     board.Bitboards[Pieces.Queen.AsColor(board.Turn.Switch())]
                 ).Occupied(pinner);
     }
+
+    public static ulong GetPinLine(Board board, int pinned, int pinner)
+    {
+        return Paths.LookupTable[board.KingPositions[board.Turn], pinner] & ~pinned.ToBitboard();
+    }
 }

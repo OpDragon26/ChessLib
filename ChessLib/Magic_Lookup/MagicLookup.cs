@@ -1,4 +1,6 @@
-﻿using ChessLib.Bitboards;
+﻿using ChessLib.Base;
+using ChessLib.Bitboards;
+using ChessLib.Utils;
 
 namespace ChessLib.Magic_Lookup;
 
@@ -32,6 +34,22 @@ public static class MagicLookup
         public static ulong QueenBitboard(int square, ulong blockers)
         {
             return RookBitboard(square, blockers) | BishopBitboard(square, blockers);
+        }
+        
+        /// <summary>
+        /// Returns a bitboard of all possible moves (captures included) with the given piece on a bitboard given a set of blockers
+        /// </summary>
+        public static ulong SwitchBitboard(byte type, int square, ulong blockers)
+        {
+            return type switch
+            {
+                Pieces.Bishop => BishopBitboard(square, blockers),
+                Pieces.Rook => RookBitboard(square, blockers),
+                Pieces.Queen => RookBitboard(square, blockers),
+                Pieces.King => Masks.King[square],
+                Pieces.Knight => Masks.Knight[square],
+                _ => throw new ThrowHelper.PieceTypeNotSupported($"Function does not accept type: {type}")
+            };
         }
     }
 }
