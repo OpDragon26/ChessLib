@@ -59,7 +59,7 @@ public class Board
     public void MakeMove(Move move)
     {
         byte sourcePiece = PiecewiseBoard[move.Source];
-        byte selectedPiece = move.IsPromotion ? move.Promotion : sourcePiece;
+        byte selectedPiece = move.IsPromotion ? move.Promotion.AsColor(Turn) : sourcePiece;
         byte targetPiece = PiecewiseBoard[move.Target];
 
         PiecewiseBoard[move.Source] = Empty;

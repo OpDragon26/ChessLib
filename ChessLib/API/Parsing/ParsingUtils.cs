@@ -64,7 +64,7 @@ public static class ParsingUtils
     }
 
     /// <summary>
-    /// Uses a finder mask to figure out which piece moved to the given location
+    /// Uses a finder mask to figure out which piece can move to the given location
     /// </summary>
     public static int FindMovingPiece(Board board, FinderMask finder, Disambiguation disambiguation = Disambiguation.None, int d = -1)
     {

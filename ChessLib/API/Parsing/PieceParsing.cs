@@ -2,7 +2,7 @@ using ChessLib.API.Display.Formatting;
 
 namespace ChessLib.API.Parsing;
 
-public static class Piece
+public static class PieceParsing
 {
     /// <summary>
     /// Finds the byte code of the piece based on the given formatting

@@ -23,7 +23,10 @@ public class PieceFormat(char[] pieces, ConsoleColor light = ConsoleColor.DarkGr
 
     public byte ParsePiece(char piece)
     {
-        return (byte)Array.IndexOf(pieces, (object)piece);
+        int index = pieces.IndexOf(piece);
+        if (index == -1)
+            return byte.MaxValue;
+        return (byte)index;
     }
 
     /// <summary>

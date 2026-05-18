@@ -98,7 +98,7 @@ public static class FEN
                     for (int i = 0; i < files; i++)
                         board[index] = Pieces.Empty;
                 else
-                    board[index] = Piece.ParsePiece(c);
+                    board[index] = PieceParsing.ParsePiece(c);
                 
                 file++;
             }

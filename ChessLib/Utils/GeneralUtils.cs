@@ -22,4 +22,20 @@ public static class GeneralUtils
         ulong rand = (ulong)random.NextInt64();
         return rand % (max - min) + min;
     }
+
+    /// <summary>
+    /// Returns index of value in array
+    /// </summary>
+    public static int IndexOf<T>(this IEnumerable<T> enumerable, T value) where T : IEquatable<T>
+    {
+        int indexOf = -1;
+        int index = 0;
+        foreach (T item in enumerable)
+        {
+            if (item.Equals(value))
+                indexOf = index;
+            index++;
+        }
+        return indexOf;
+    }
 }
