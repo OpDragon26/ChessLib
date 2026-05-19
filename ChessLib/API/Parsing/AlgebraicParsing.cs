@@ -34,6 +34,13 @@ public static class AlgebraicParsing
                 if (move[2] == '=')
                     return ParseNonCapturePromotion(board, move); // non-capture promotion: e8=Q
                 return ParseSingleDisambiguatedMove(board, move); // single-disambiguated piece move: Nbc3
+            case 5:
+                // double-disambiguated piece move: Ne3f5
+                // single-disambiguated piece capture: Nexf5
+                if (move[1] == '-')
+                    return board.IsWhiteTurn ? Move.WhiteLongCastle : Move.BlackLongCastle; // long castle: O-O-O
+                if (move[2] == 'x')
+                break;
         }
         
         throw new ThrowHelper.NotationParsingException($"Incorrect move formatting: {move}");
