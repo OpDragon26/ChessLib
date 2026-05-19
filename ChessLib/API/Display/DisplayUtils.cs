@@ -54,4 +54,20 @@ public static class DisplayUtils
     {
         return rank - '1';
     }
+
+    /// <summary>
+    /// Returns true if the char represents 1-8
+    /// </summary>
+    public static bool IsRankChar(this char c)
+    {
+        return (byte)c is < 58 and > 47;
+    }
+    
+    /// <summary>
+    /// Returns true if the char represents a-h
+    /// </summary>
+    public static bool IsFileChar(this char c)
+    {
+        return (byte)c is < 105 and > 96;
+    }
 }

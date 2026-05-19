@@ -23,6 +23,7 @@ public class Board
     public byte this[int file, int rank] => PiecewiseBoard[(file, rank).AsIndex()];
     public byte this[(int file, int rank) square] => PiecewiseBoard[square.AsIndex()];
     public byte this[Coordinate c] => this[c.AsIndex()];
+    public bool IsWhiteTurn => Turn == 0;
     public static Board StartingBoard => FEN.ParseFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
     
     public Board(PiecewiseBoard board, int turn = 0, int enPassantSquare = 0, CastlingRights castlingRights = new())

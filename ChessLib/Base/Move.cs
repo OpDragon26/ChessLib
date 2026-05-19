@@ -57,6 +57,11 @@ public readonly struct Move(int source, int target, byte promotion = 0, Flag fla
     {
         return Source.ToAlgebraic() + Target.ToAlgebraic() + DefaultFormatting.ASCII.FormatPiece(Promotion);
     }
+    
+    public static Move WhiteShortCastle = new Move("e1", "g1", flag: Flag.ShortCastle);
+    public static Move WhiteLongCastle = new Move("e1", "c1", flag: Flag.LongCastle);
+    public static Move BlackShortCastle = new Move("e8", "g8", flag: Flag.ShortCastle);
+    public static Move BlackLongCastle = new Move("e8", "c8", flag: Flag.LongCastle);
 }
 
 /// <summary>
