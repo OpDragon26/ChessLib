@@ -35,15 +35,40 @@ public static class AlgebraicParsing
                     return ParseNonCapturePromotion(board, move); // non-capture promotion: e8=Q
                 return ParseSingleDisambiguatedMove(board, move); // single-disambiguated piece move: Nbc3
             case 5:
-                // double-disambiguated piece move: Ne3f5
-                // single-disambiguated piece capture: Nexf5
+                // long castle: O-O-O
                 if (move[1] == '-')
-                    return board.IsWhiteTurn ? Move.WhiteLongCastle : Move.BlackLongCastle; // long castle: O-O-O
+                    return board.IsWhiteTurn ? Move.WhiteLongCastle : Move.BlackLongCastle;
+                // single-disambiguated piece capture: Nexf5
                 if (move[2] == 'x')
-                break;
+                    return ParseSingleDisambiguatedMove(board, move[..2] + move[3..]);
+                // double-disambiguated piece move: Ne3f5
+                return ParseDoubleDisambiguatedMove(board, move);
+            case 6:
+                // double-disambiguated capture: Ne3xf5
+                if (move[3] == 'x')
+                    return ParseDoubleDisambiguatedMove(board, move[..3] + move[4..]);
+                // capture promotion: fxe8=Q
+                return ParseCapturePromotion(board, move);
         }
-        
         throw new ThrowHelper.NotationParsingException($"Incorrect move formatting: {move}");
+    }
+
+    private static Move ParseCapturePromotion(Board board, string move)
+    {
+        (int file, int rank) target = move[2..4].ParseSquare();
+        (int file, int rank) source = target.OffsetRank(board.Turn.GetOffset());
+        source = (move[0].GetFile(), source.rank);
+        byte piece = move.ParsePieceType(5);
+        
+        return new Move(source, target, piece);
+    }
+
+    private static Move ParseDoubleDisambiguatedMove(Board board, string move)
+    {
+        int target = move[3..].ParseSquare().AsIndex();
+        int source = move[1..3].ParseSquare().AsIndex();
+
+        return new Move(source, target);
     }
 
     private static Move ParseSingleDisambiguatedMove(Board board, string move)
