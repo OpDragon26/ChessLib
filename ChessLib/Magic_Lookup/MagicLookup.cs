@@ -1,5 +1,6 @@
 ﻿using ChessLib.Base;
 using ChessLib.Bitboards;
+using ChessLib.Magic_Lookup.Utils;
 using ChessLib.Utils;
 
 namespace ChessLib.Magic_Lookup;
@@ -13,9 +14,7 @@ public static class MagicLookup
         /// </summary>
         public static ulong RookBitboard(int square, ulong blockers)
         {
-            MagicNumber number = MagicNumbers.Rook[square];
-            ulong index = number.Calculate(blockers & Masks.Rook[square]);
-            return Magic_Lookup.Moves.RookBitboard[square][index];
+            return Magic_Lookup.Moves.RookBitboard.Lookup(MagicNumbers.Rook, square, blockers & Masks.Rook[square]);
         }
         
         /// <summary>
@@ -23,9 +22,7 @@ public static class MagicLookup
         /// </summary>
         public static ulong BishopBitboard(int square, ulong blockers)
         {
-            MagicNumber number = MagicNumbers.Bishop[square];
-            ulong index = number.Calculate(blockers & Masks.Bishop[square]);
-            return Magic_Lookup.Moves.BishopBitboard[square][index];
+            return Magic_Lookup.Moves.BishopBitboard.Lookup(MagicNumbers.Bishop, square, blockers & Masks.Bishop[square]);
         }
 
         /// <summary>

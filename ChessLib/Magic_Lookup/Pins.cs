@@ -48,6 +48,13 @@ public static class Pins
         Bishop.FillLookupTable(MagicNumbers.Bishop, Combinations.Bishop, (s, c) => GeneratePinState(s, c, MovePattern.Bishop));
     }
     
+    
+    /// <summary>
+    /// A Pin State is a dictionary that (based on the previously provided position) uses a potentially pinned piece as a key to find the position of its potential pinner to use during move generation/validation
+    /// </summary>
+    /// <param name="square"></param>
+    /// <param name="combination"></param>
+    /// <param name="pattern"></param>
     public static Dictionary<int, int> GeneratePinState(int square, ulong combination, MovePattern pattern)
     {
         Dictionary<int, int> pinState = new();
